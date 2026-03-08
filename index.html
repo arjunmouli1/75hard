@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>75 HARD — Daily Protocol</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #f5f2ed;
+  --bg2:      #fffefb;
+  --bg3:      #f0ece5;
+  --bg4:      #e8e3da;
+  --ink:      #1a1612;
+  --ink2:     #3d3730;
+  --ink3:     #6b6258;
+  --ink4:     #9e968d;
+  --rule:     #ddd8cf;
+  --rule2:    #e8e3da;
+  --orange:   #d94f00;
+  --orange2:  #f07030;
+  --green:    #2a7a4b;
+  --green2:   #e8f5ee;
+  --blue:     #1a5fa8;
+  --blue2:    #e8f0fa;
+  --amber:    #b57d00;
+  --amber2:   #fdf5e0;
+  --red:      #c0392b;
+  --red2:     #fdecea;
+  --purple:   #7b4fa0;
+  --purple2:  #f5eefa;
+  --pink:     #c2185b;
+  --radius:   8px;
+  --shadow:   0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.06);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--ink); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: var(--bg3); }
+::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 2px; }
+
+@keyframes fadeup { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+@keyframes pop { 0%{transform:scale(.95)} 60%{transform:scale(1.03)} 100%{transform:scale(1)} }
+.fade-in { animation: fadeup .3s ease forwards; }
+
+/* ── TOP NAV ── */
+#topbar {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--rule);
+  padding: 0 28px;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+.topbar-inner {
+  max-width: 960px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 56px;
+}
+.brand { display: flex; align-items: baseline; gap: 10px; }
+.brand-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 900; color: var(--ink); letter-spacing: -.3px; }
+.brand-badge { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--orange); letter-spacing: 2px; font-weight: 500; border: 1px solid var(--orange); padding: 2px 6px; border-radius: 3px; }
+
+/* ── DAY NAVIGATOR ── */
+#day-nav {
+  background: var(--bg2);
+  border-bottom: 2px solid var(--rule);
+  padding: 12px 28px;
+  position: sticky; top: 56px; z-index: 99;
+}
+.day-nav-inner { max-width: 960px; margin: 0 auto; }
+.nav-top { display: flex; align-items: center; gap: 16px; margin-bottom: 10px; }
+.day-label { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 900; color: var(--ink); line-height: 1; }
+.day-label span { color: var(--orange); }
+.day-sub { font-size: 12px; color: var(--ink4); letter-spacing: .5px; }
+.today-btn { margin-left: auto; font-size: 11px; font-weight: 600; color: var(--orange); background: none; border: 1.5px solid var(--orange); padding: 5px 12px; border-radius: 20px; cursor: pointer; font-family: 'DM Sans', sans-serif; letter-spacing: .5px; transition: all .2s; }
+.today-btn:hover { background: var(--orange); color: #fff; }
+.nav-arrow { background: none; border: 1.5px solid var(--rule); border-radius: 6px; color: var(--ink3); width: 32px; height: 32px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: all .15s; flex-shrink: 0; }
+.nav-arrow:hover:not(:disabled) { border-color: var(--orange); color: var(--orange); }
+.nav-arrow:disabled { opacity: .3; cursor: not-allowed; }
+
+/* PROGRESS TRACK */
+.prog-track-wrap { position: relative; }
+.prog-track { display: flex; gap: 2px; overflow-x: auto; padding-bottom: 4px; cursor: pointer; }
+.prog-track::-webkit-scrollbar { height: 3px; }
+.prog-day { width: 10px; height: 22px; border-radius: 3px; flex-shrink: 0; transition: transform .1s; cursor: pointer; position: relative; }
+.prog-day:hover { transform: scaleY(1.15); }
+.prog-day.future   { background: var(--rule2); }
+.prog-day.complete { background: var(--green); }
+.prog-day.partial  { background: var(--amber); }
+.prog-day.today    { background: var(--orange); box-shadow: 0 0 0 2px var(--orange2); }
+.prog-day.viewing  { outline: 2px solid var(--blue); outline-offset: 1px; }
+.prog-day.missed   { background: var(--red); }
+
+/* ── HERO STATS ── */
+#hero { padding: 20px 28px 0; }
+.hero-inner { max-width: 960px; margin: 0 auto; }
+.hero-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+.hero-card { background: var(--bg2); border: 1px solid var(--rule); border-radius: var(--radius); padding: 12px 14px; box-shadow: var(--shadow-sm); }
+.hero-lbl { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--ink4); letter-spacing: 2px; margin-bottom: 6px; }
+.hero-val { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; line-height: 1.1; }
+.hero-sub { font-size: 10px; color: var(--ink4); margin-top: 3px; }
+
+/* ── RULES STRIP ── */
+#rules-strip { padding: 0 28px; }
+.rules-inner { max-width: 960px; margin: 0 auto; }
+.rules-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; padding: 14px 0; }
+.rule-card { background: var(--bg2); border: 1px solid var(--rule); border-radius: var(--radius); padding: 11px 14px; display: flex; align-items: center; gap: 11px; box-shadow: var(--shadow-sm); }
+.rule-icon { font-size: 18px; flex-shrink: 0; }
+.rule-name { font-size: 13px; font-weight: 600; color: var(--ink); }
+.rule-sub  { font-size: 11px; color: var(--ink4); }
+
+/* ── MAIN ── */
+#main { max-width: 960px; margin: 0 auto; padding: 0 28px 80px; }
+.tab-bar { display: flex; gap: 0; border-bottom: 2px solid var(--rule); margin-bottom: 20px; margin-top: 16px; overflow-x: auto; }
+.tab-btn { background: none; border: none; color: var(--ink4); font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 1px; cursor: pointer; padding: 10px 16px; border-bottom: 2px solid transparent; margin-bottom: -2px; white-space: nowrap; transition: all .2s; text-transform: uppercase; }
+.tab-btn.active { color: var(--orange); border-bottom-color: var(--orange); }
+.tab-btn:hover:not(.active) { color: var(--ink2); }
+.tab-pane { display: none; }
+.tab-pane.active { display: block; }
+
+/* ── CHECKLIST ── */
+.section-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--ink4); letter-spacing: 2px; margin-bottom: 12px; text-transform: uppercase; }
+.check-row { display: flex; align-items: center; gap: 13px; padding: 13px 16px; background: var(--bg2); border: 1px solid var(--rule); border-radius: var(--radius); margin-bottom: 8px; cursor: pointer; transition: background .15s, border-color .15s; user-select: none; box-shadow: var(--shadow-sm); }
+.check-row:hover { border-color: var(--ink4); }
+.check-row.done { background: var(--green2); border-color: #b8ddc8; }
+.check-box { width: 22px; height: 22px; border: 2px solid var(--rule); border-radius: 5px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all .2s; background: var(--bg); }
+.check-row.done .check-box { background: var(--green); border-color: var(--green); animation: pop .25s ease; }
+.check-tick { color: #fff; font-size: 13px; display: none; font-weight: 700; }
+.check-row.done .check-tick { display: block; }
+.check-row.done .check-text { color: var(--ink3); text-decoration: line-through; }
+.check-row.done .check-sub  { text-decoration: line-through; }
+.check-icon { font-size: 18px; flex-shrink: 0; }
+.check-text { font-size: 13px; font-weight: 600; color: var(--ink); }
+.check-sub  { font-size: 11px; color: var(--ink4); margin-top: 1px; }
+.completed-banner { background: linear-gradient(135deg, var(--green2), #d4f0e0); border: 1.5px solid #a8d8bc; border-radius: var(--radius); padding: 20px; text-align: center; margin-bottom: 16px; }
+.completed-banner .big { font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 900; color: var(--green); line-height: 1; }
+.completed-banner .lbl { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--green); letter-spacing: 2px; margin-top: 6px; }
+
+/* NOTES BOX */
+.notes-wrap { margin-top: 24px; }
+.notes-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--ink4); letter-spacing: 2px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; }
+.notes-saved { font-size: 10px; color: var(--green); opacity: 0; transition: opacity .3s; }
+.notes-saved.show { opacity: 1; }
+.notes-area { width: 100%; min-height: 120px; background: var(--bg2); border: 1.5px solid var(--rule); border-radius: var(--radius); padding: 14px 16px; font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--ink); resize: vertical; outline: none; transition: border-color .2s; line-height: 1.6; box-shadow: var(--shadow-sm); }
+.notes-area:focus { border-color: var(--orange); }
+.notes-area::placeholder { color: var(--ink4); }
+.notes-hint { font-size: 11px; color: var(--ink4); margin-top: 6px; }
+
+.reset-btn { margin-top: 14px; width: 100%; padding: 11px; background: none; border: 1.5px dashed var(--rule); border-radius: var(--radius); color: var(--ink4); font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: .5px; cursor: pointer; transition: all .2s; }
+.reset-btn:hover { border-color: var(--red); color: var(--red); background: var(--red2); }
+
+/* SCHEDULE */
+.sched-row { display: grid; grid-template-columns: 72px 170px 1fr; align-items: start; gap: 14px; padding: 12px 16px; border-radius: var(--radius); margin-bottom: 8px; border: 1px solid; transition: box-shadow .15s; box-shadow: var(--shadow-sm); }
+.sched-row:hover { box-shadow: var(--shadow); }
+.sched-time { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--ink4); padding-top: 1px; }
+.sched-block-wrap { display: flex; align-items: center; gap: 8px; }
+.dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.sched-block { font-size: 12px; font-weight: 700; color: var(--ink); letter-spacing: .3px; }
+.sched-detail { font-size: 12px; color: var(--ink3); line-height: 1.55; }
+
+/* NUTRITION */
+.macro-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 20px; }
+.macro-card { background: var(--bg2); border: 1px solid var(--rule); border-radius: var(--radius); padding: 14px; text-align: center; box-shadow: var(--shadow-sm); }
+.macro-lbl { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--ink4); letter-spacing: 2px; margin-bottom: 8px; }
+.macro-val { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; }
+.meal-card { background: var(--bg2); border: 1px solid var(--rule); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; box-shadow: var(--shadow-sm); }
+.meal-hd { display: flex; justify-content: space-between; align-items: center; margin-bottom: 11px; }
+.meal-title { font-size: 14px; font-weight: 700; color: var(--ink); }
+.meal-macros { display: flex; gap: 10px; font-family: 'DM Mono', monospace; font-size: 11px; }
+.meal-item { font-size: 12px; color: var(--ink3); line-height: 1.75; display: flex; gap: 8px; }
+.meal-dash { color: var(--rule); }
+
+/* MOBILITY */
+.mob-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.mob-title { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 2px; margin-bottom: 14px; padding: 8px 12px; border-radius: 6px; }
+.mob-row { background: var(--bg2); border: 1px solid var(--rule); border-radius: var(--radius); padding: 11px 14px; margin-bottom: 7px; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow-sm); }
+.mob-name { font-size: 13px; font-weight: 600; color: var(--ink); }
+.mob-sets { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--ink4); }
+
+/* SUPPLEMENTS */
+.flag-box { background: #fff8f0; border: 1px solid #f5c090; border-radius: var(--radius); padding: 13px 16px; margin-bottom: 18px; font-size: 12px; line-height: 1.6; color: #8a4010; }
+.flag-box strong { color: var(--orange); }
+.supp-row { background: var(--bg2); border: 1px solid var(--rule); border-radius: var(--radius); padding: 13px 18px; margin-bottom: 8px; display: grid; grid-template-columns: 80px 200px 1fr; align-items: center; gap: 14px; box-shadow: var(--shadow-sm); }
+.supp-time { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--ink4); }
+.supp-name { font-size: 13px; font-weight: 600; color: var(--ink); }
+.supp-note { font-size: 12px; color: var(--ink3); }
+.skin-box { margin-top: 20px; background: var(--bg2); border: 1px solid var(--rule); border-radius: var(--radius); padding: 16px 18px; box-shadow: var(--shadow-sm); }
+.skin-title { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--ink4); letter-spacing: 2px; margin-bottom: 13px; }
+.skin-row { display: flex; gap: 16px; margin-bottom: 9px; }
+.skin-lbl { font-size: 11px; font-weight: 700; color: var(--pink); min-width: 52px; }
+.skin-note { font-size: 12px; color: var(--ink3); line-height: 1.5; }
+
+/* DATE EDITOR */
+.date-row { display: flex; align-items: center; gap: 8px; }
+.btn-ghost { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--ink4); background: none; border: 1px solid var(--rule); padding: 5px 10px; border-radius: 5px; cursor: pointer; letter-spacing: 1px; transition: all .15s; }
+.btn-ghost:hover { border-color: var(--ink3); color: var(--ink2); }
+.btn-orange { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--orange); background: none; border: 1.5px solid var(--orange); padding: 5px 12px; border-radius: 5px; cursor: pointer; letter-spacing: 1px; transition: all .15s; }
+.btn-orange:hover { background: var(--orange); color: #fff; }
+input[type=date] { background: var(--bg2); border: 1px solid var(--rule); color: var(--ink); font-family: 'DM Sans', sans-serif; font-size: 12px; padding: 5px 10px; border-radius: 5px; cursor: pointer; outline: none; }
+input[type=date]:focus { border-color: var(--orange); }
+
+/* PROGRESS RING */
+.ring-wrap { position: relative; width: 72px; height: 72px; flex-shrink: 0; }
+.ring-track { fill: none; stroke: var(--rule); stroke-width: 5; }
+.ring-fill  { fill: none; stroke: var(--orange); stroke-width: 5; stroke-linecap: round; transition: stroke-dashoffset 1s ease; }
+.ring-inner { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.ring-pct   { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--ink); line-height: 1; }
+.ring-sub   { font-family: 'DM Mono', monospace; font-size: 8px; color: var(--ink4); letter-spacing: 1px; }
+
+/* VIEWING PAST / FUTURE BANNERS */
+.day-banner { padding: 10px 16px; border-radius: var(--radius); font-size: 12px; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.day-banner.past   { background: var(--blue2); color: var(--blue); border: 1px solid #b8d0f0; }
+.day-banner.future { background: var(--amber2); color: var(--amber); border: 1px solid #f0d890; }
+
+@media (max-width: 640px) {
+  .hero-grid { grid-template-columns: repeat(3,1fr); }
+  .rules-grid { grid-template-columns: 1fr 1fr; }
+  .mob-grid   { grid-template-columns: 1fr; }
+  .macro-grid { grid-template-columns: repeat(2,1fr); }
+  .sched-row  { grid-template-columns: 60px 1fr; }
+  .supp-row   { grid-template-columns: 70px 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div id="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="brand-title">75 Hard</div>
+      <div class="brand-badge">PROTOCOL</div>
+    </div>
+    <div class="date-row" id="dateRow">
+      <button class="btn-ghost" id="editDateBtn" onclick="showDateEdit()">✎ Start Date</button>
+      <span id="dateEditArea" style="display:none">
+        <input type="date" id="dateInput">
+        <button class="btn-orange" onclick="saveStartDate()">Save</button>
+        <button class="btn-ghost" onclick="hideDateEdit()">Cancel</button>
+      </span>
+    </div>
+  </div>
+</div>
+
+<!-- DAY NAVIGATOR -->
+<div id="day-nav">
+  <div class="day-nav-inner">
+    <div class="nav-top">
+      <button class="nav-arrow" id="prevBtn" onclick="navigateDay(-1)">‹</button>
+      <div>
+        <div class="day-label">Day <span id="viewingDay">1</span> <span style="color:var(--ink4);font-size:18px;font-weight:400">/ 75</span></div>
+        <div class="day-sub" id="daySubLabel">Loading…</div>
+      </div>
+      <button class="nav-arrow" id="nextBtn" onclick="navigateDay(1)">›</button>
+      <button class="today-btn" onclick="goToToday()">→ Today</button>
+      <div style="margin-left:8px">
+        <div class="ring-wrap">
+          <svg width="72" height="72" viewBox="0 0 72 72" style="transform:rotate(-90deg)">
+            <circle class="ring-track" cx="36" cy="36" r="30"/>
+            <circle class="ring-fill" id="ringFill" cx="36" cy="36" r="30"
+              stroke-dasharray="188.5" stroke-dashoffset="188.5"/>
+          </svg>
+          <div class="ring-inner">
+            <div class="ring-pct" id="ringPct">0%</div>
+            <div class="ring-sub">done</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Day scrubber -->
+    <div class="prog-track-wrap">
+      <div class="prog-track" id="progTrack"></div>
+    </div>
+  </div>
+</div>
+
+<!-- HERO STATS -->
+<div id="hero">
+  <div class="hero-inner">
+    <div class="hero-grid">
+      <div class="hero-card">
+        <div class="hero-lbl">Lifting</div>
+        <div class="hero-val" id="hLift">—</div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-lbl">Focus</div>
+        <div class="hero-val" id="hFocus" style="font-size:13px">—</div>
+        <div class="hero-sub" id="hFocusSub"></div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-lbl">Mobility</div>
+        <div class="hero-val" id="hMob">—</div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-lbl">Eating Window</div>
+        <div class="hero-val" style="color:var(--green)">12p – 7p</div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-lbl">Fast</div>
+        <div class="hero-val" style="color:var(--amber)">17 hrs</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RULES STRIP -->
+<div id="rules-strip">
+  <div class="rules-inner">
+    <div class="rules-grid">
+      <div class="rule-card"><span class="rule-icon">💪</span><div><div class="rule-name">Two 45-min workouts</div><div class="rule-sub">One must be outdoors</div></div></div>
+      <div class="rule-card"><span class="rule-icon">📖</span><div><div class="rule-name">Read 10 pages</div><div class="rule-sub">Non-fiction / self-development</div></div></div>
+      <div class="rule-card"><span class="rule-icon">💧</span><div><div class="rule-name">1 gallon of water</div><div class="rule-sub">No exceptions</div></div></div>
+      <div class="rule-card"><span class="rule-icon">🥩</span><div><div class="rule-name">Follow your diet</div><div class="rule-sub">2,200 cal · 175g protein · no cheats</div></div></div>
+      <div class="rule-card"><span class="rule-icon">📸</span><div><div class="rule-name">Progress photo</div><div class="rule-sub">Daily — no skipping</div></div></div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><div><div class="rule-name">Zero alcohol / substances</div><div class="rule-sub">Miss one rule = restart Day 1</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main">
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('checklist',event)">Today</button>
+    <button class="tab-btn" onclick="switchTab('schedule',event)">Schedule</button>
+    <button class="tab-btn" onclick="switchTab('nutrition',event)">Nutrition</button>
+    <button class="tab-btn" onclick="switchTab('mobility',event)">Mobility</button>
+    <button class="tab-btn" onclick="switchTab('supplements',event)">Supplements</button>
+  </div>
+
+  <!-- CHECKLIST -->
+  <div class="tab-pane active" id="tab-checklist">
+    <div id="dayBanner"></div>
+    <div id="completedBanner" style="display:none" class="completed-banner">
+      <div class="big">75</div>
+      <div class="lbl">🔥 Program Complete — You Are Different Now</div>
+    </div>
+    <div class="section-eyebrow">Daily Tasks — Day <span id="checkDayNum">1</span></div>
+    <div id="checklistItems"></div>
+    <button class="reset-btn" onclick="resetChecklist()">↺ Reset This Day's Checklist</button>
+
+    <!-- NOTES -->
+    <div class="notes-wrap">
+      <div class="notes-label">
+        <span>📝 Day Notes</span>
+        <span class="notes-saved" id="notesSaved">✓ Saved</span>
+      </div>
+      <textarea class="notes-area" id="notesArea" placeholder="Log anything — how you felt, what you hit in the gym, what you ate, wins, struggles…" rows="5"></textarea>
+      <div class="notes-hint">Notes auto-save as you type and are stored per day.</div>
+    </div>
+  </div>
+
+  <!-- SCHEDULE -->
+  <div class="tab-pane" id="tab-schedule"></div>
+
+  <!-- NUTRITION -->
+  <div class="tab-pane" id="tab-nutrition">
+    <div class="macro-grid">
+      <div class="macro-card"><div class="macro-lbl">Calories</div><div class="macro-val" style="color:var(--amber)">≤2,200</div></div>
+      <div class="macro-card"><div class="macro-lbl">Protein</div><div class="macro-val" style="color:var(--green)">175g+</div></div>
+      <div class="macro-card"><div class="macro-lbl">Window</div><div class="macro-val" style="color:var(--blue)">12–7p</div></div>
+      <div class="macro-card"><div class="macro-lbl">Fast</div><div class="macro-val" style="color:var(--orange)">17 hrs</div></div>
+    </div>
+    <div id="mealCards"></div>
+  </div>
+
+  <!-- MOBILITY -->
+  <div class="tab-pane" id="tab-mobility">
+    <div class="mob-grid">
+      <div>
+        <div class="mob-title" style="color:var(--amber);background:var(--amber2);border:1px solid #f0d080">◆ CORE — PPL Days 1, 3, 5, 7</div>
+        <div id="coreRows"></div>
+      </div>
+      <div>
+        <div class="mob-title" style="color:var(--purple);background:var(--purple2);border:1px solid #d0b0e8">◆ HIP / LOWER BODY — PPL Days 2, 4, 6</div>
+        <div id="hipRows"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUPPLEMENTS -->
+  <div class="tab-pane" id="tab-supplements">
+    <div class="flag-box">⚠ <strong>Creatine flag:</strong> 15g/day exceeds evidence-based maintenance (3–5g/day). Loading phase is 20g/day for 5–7 days one-time only. Ongoing 15g has no added benefit and increases GI distress risk. Confirm protocol intent.</div>
+    <div id="suppRows"></div>
+    <div class="skin-box">
+      <div class="skin-title">SKINCARE PROTOCOL</div>
+      <div class="skin-row"><div class="skin-lbl">Daily</div><div class="skin-note">AM cleanser every morning post-workout. Sunscreen before outdoor workout.</div></div>
+      <div class="skin-row"><div class="skin-lbl">EOD</div><div class="skin-note">Chemical exfoliant pads — alternate evenings at wind-down.</div></div>
+      <div class="skin-row"><div class="skin-lbl">Note</div><div class="skin-note">Apply sunscreen before heading out regardless of time — if outdoor workout is pre-sunrise, still apply.</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────
+const PPL = {
+  1:{label:'PUSH',  detail:'Chest · Shoulders · Triceps',   color:'var(--orange)'},
+  2:{label:'PULL',  detail:'Back · Biceps · Rear Delts',    color:'var(--blue)'},
+  3:{label:'LEGS',  detail:'Quads · Hamstrings · Glutes',   color:'var(--purple)'},
+  4:{label:'PUSH',  detail:'Chest · Shoulders · Triceps',   color:'var(--orange)'},
+  5:{label:'PULL',  detail:'Back · Biceps · Rear Delts',    color:'var(--blue)'},
+  6:{label:'LEGS',  detail:'Quads · Hamstrings · Glutes',   color:'var(--purple)'},
+  7:{label:'ACTIVE RECOVERY', detail:'Zone 2 · Walk / Bike / Row', color:'var(--green)'},
+};
+const MOB_MAP = {1:'CORE',2:'HIP',3:'CORE',4:'HIP',5:'CORE',6:'HIP',7:'CORE'};
+const MOB_LABEL = {CORE:'CORE', HIP:'HIP / LOWER BODY'};
+const MOB_COLOR = {CORE:'var(--amber)', HIP:'var(--purple)'};
+
+const SCHEDULE = [
+  {time:'5:00 AM', block:'WAKE + SUPPLEMENTS', detail:'16oz water immediately. Creatine (15g) + Omega-3. Fasting active — 17hr fast from 7pm prior night.', tag:'fast'},
+  {time:'5:10 AM', block:'SKINCARE',           detail:'Cleanser (daily). Pads (EOD). Sunscreen before outdoor workout.', tag:'skin'},
+  {time:'5:15 AM', block:'WORKOUT #1 — GYM',   detail:'45 min minimum · PPL lift per split · Follow with 15–20 min mobility block (Core or Hip, alternating by PPL day).', tag:'train'},
+  {time:'6:30 AM', block:'SHOWER + COFFEE #1', detail:'Black coffee only. Push hydration — 32oz target by 8am.', tag:'routine'},
+  {time:'7:00 AM', block:'DEEP WORK',          detail:'Heads-down block. Coffee #2 no later than 11:30am. No caffeine after 12pm.', tag:'work'},
+  {time:'10:00 AM',block:'READ — 10 PAGES',    detail:'75 Hard requirement. Non-fiction / self-development. Can split into two 5-page sessions.', tag:'hard75'},
+  {time:'12:00 PM',block:'BREAK FAST — MEAL 1',detail:'Eating window opens. 17hr fast completes from 7pm prior. D3 + K2 + B-Complex taken here.', tag:'eat'},
+  {time:'3:30 PM', block:'WORKOUT #2 — OUTDOORS',detail:'45 min minimum · Must be outside · Walk, run, ruck, or bike · Counts toward 10k steps.', tag:'train'},
+  {time:'4:30 PM', block:'MEAL 2',             detail:'Post-outdoor workout. High protein focus. Hydration check — 80oz target by now.', tag:'eat'},
+  {time:'6:30 PM', block:'MEAL 3 + PHOTO',     detail:'Last meal by 7pm locks eating window. Take daily progress photo — 75 Hard requirement.', tag:'eat'},
+  {time:'7:00 PM', block:'EATING WINDOW CLOSES',detail:'17hr fast begins. Steps check — 10k target. Final hydration push if behind on gallon.', tag:'fast'},
+  {time:'9:00 PM', block:'WIND-DOWN',          detail:'Magnesium L-Threonate + ZMA (empty stomach). EOD skincare pads if scheduled. Limit screens.', tag:'skin'},
+  {time:'9:30 PM', block:'SLEEP TARGET',       detail:'7–7.5hr for recovery and hormonal reset. 5am wake = lights out by 9:30pm.', tag:'rest'},
+];
+
+const TAG = {
+  fast:   {dot:'#d97706', bg:'#fffbeb', border:'#fde68a'},
+  skin:   {dot:'#db2777', bg:'#fdf2f8', border:'#fbcfe8'},
+  train:  {dot:'#16a34a', bg:'#f0fdf4', border:'#bbf7d0'},
+  routine:{dot:'#64748b', bg:'#f8fafc', border:'#e2e8f0'},
+  work:   {dot:'#2563eb', bg:'#eff6ff', border:'#bfdbfe'},
+  hard75: {dot:'#d94f00', bg:'#fff7f0', border:'#fed7aa'},
+  eat:    {dot:'#dc2626', bg:'#fff5f5', border:'#fecaca'},
+  rest:   {dot:'#7c3aed', bg:'#f5f3ff', border:'#ddd6fe'},
+};
+
+const MEALS = [
+  {label:'Meal 1 — 12:00 PM', cal:'~700 cal', protein:'60g',
+   items:['6oz grilled chicken or 99% lean turkey','3 whole eggs + 2 whites scrambled','1 cup non-fat Greek yogurt','Large leafy greens + lemon + 1 tsp olive oil']},
+  {label:'Meal 2 — 4:30 PM',  cal:'~650 cal', protein:'55g',
+   items:['6oz salmon or lean white fish','1 cup low-fat cottage cheese','2 cups roasted broccoli / asparagus / zucchini','15g almonds']},
+  {label:'Meal 3 — 6:30 PM',  cal:'~650 cal', protein:'60g',
+   items:['8oz lean ground beef (93/7) or shrimp','Edamame or lentils (small portion)','Cucumber + tomato + spinach','½ avocado or 1 tbsp olive oil']},
+  {label:'Buffer — flex',     cal:'~150 cal', protein:'25g',
+   items:['Whey isolate shake if under 175g protein target','Or: 1 cup non-fat cottage cheese']},
+];
+
+const CORE = [
+  {name:'Dead Bug',          sets:'3×10 / side'},
+  {name:'Hollow Body Hold',  sets:'3×30 sec'},
+  {name:'Ab Wheel Rollout',  sets:'3×8–12'},
+  {name:'Copenhagen Plank',  sets:'3×20 sec / side'},
+  {name:'Pallof Press',      sets:'3×12 / side'},
+  {name:'Hanging Leg Raise', sets:'3×12–15'},
+];
+const HIP = [
+  {name:'90/90 Hip Switches',    sets:'2 min continuous'},
+  {name:'Pigeon Pose',           sets:'90 sec / side'},
+  {name:'Couch Stretch',         sets:'90 sec / side'},
+  {name:'Deep Squat Hold',       sets:'2 min'},
+  {name:'Hip Flexor Lunge',      sets:'60 sec / side'},
+  {name:'Lateral Band Walk',     sets:'3×15 each way'},
+  {name:'Glute Bridge',          sets:'3×15'},
+];
+
+const SUPPS = [
+  {time:'5:00 AM',  item:'Creatine (15g)',        note:'Pre-training — consider 3×5g split if GI sensitive'},
+  {time:'5:00 AM',  item:'Omega-3',               note:'With water pre-workout'},
+  {time:'12:00 PM', item:'D3 + K2 MK7',           note:'With first meal — fat soluble, needs dietary fat'},
+  {time:'12:00 PM', item:'B-Complex',              note:'With first meal'},
+  {time:'9:00 PM',  item:'Magnesium L-Threonate',  note:'30–60 min before bed, empty stomach'},
+  {time:'9:00 PM',  item:'ZMA',                   note:'Empty stomach, 30–60 min before bed'},
+];
+
+const CHECKS = [
+  {id:'w1',    icon:'🏋️', label:'Workout #1 — Gym (45 min)',      sub:'PPL lift + mobility block'},
+  {id:'w2',    icon:'🌤️', label:'Workout #2 — Outdoors (45 min)', sub:'Must be outside — walk, run, ruck, or bike'},
+  {id:'read',  icon:'📖', label:'Read 10 pages',                  sub:'Non-fiction / self-development'},
+  {id:'water', icon:'💧', label:'1 gallon of water',              sub:'Track throughout the day'},
+  {id:'diet',  icon:'🥩', label:'Follow your diet',               sub:'2,200 cal · 175g protein · no cheat meals'},
+  {id:'photo', icon:'📸', label:'Progress photo',                 sub:'Take before or after last meal'},
+  {id:'steps', icon:'👟', label:'10,000 steps',                   sub:'Workout #2 + general movement counts'},
+  {id:'skin',  icon:'✨', label:'Skincare routine',               sub:'Cleanser + sunscreen (pads EOD)'},
+];
+
+// ── STORAGE ───────────────────────────────────────────
+const SK = '75h_start2';
+const CK = '75h_checks2';
+const NK = '75h_notes2';
+
+function getStart() {
+  const s = localStorage.getItem(SK);
+  if (s) return new Date(s);
+  const d = new Date(); d.setHours(0,0,0,0);
+  localStorage.setItem(SK, d.toISOString());
+  return d;
+}
+function todayNum() {
+  const diff = Math.floor((today0() - getStart()) / 86400000);
+  return Math.max(1, Math.min(diff + 1, 75));
+}
+function today0() { const d = new Date(); d.setHours(0,0,0,0); return d; }
+function dayKey(n) { return 'day' + n; }
+
+function getChecks(day) {
+  try { const r = JSON.parse(localStorage.getItem(CK)||'{}'); return r[dayKey(day)]||{}; } catch{return{};}
+}
+function saveChecks(day, obj) {
+  try { const r = JSON.parse(localStorage.getItem(CK)||'{}'); r[dayKey(day)]=obj; localStorage.setItem(CK,JSON.stringify(r)); } catch{}
+}
+function toggleCheck(id) {
+  const c = getChecks(viewDay); c[id] = !c[id];
+  saveChecks(viewDay, c); renderChecklist();
+}
+function resetChecklist() {
+  saveChecks(viewDay, {}); renderChecklist();
+}
+function getDayComplete(day) {
+  const c = getChecks(day); return CHECKS.every(ch => c[ch.id]);
+}
+function getDayPartial(day) {
+  const c = getChecks(day); return CHECKS.some(ch => c[ch.id]) && !CHECKS.every(ch => c[ch.id]);
+}
+
+function getNotes(day) {
+  try { const r = JSON.parse(localStorage.getItem(NK)||'{}'); return r[dayKey(day)]||''; } catch{return'';}
+}
+function saveNotes(day, text) {
+  try { const r = JSON.parse(localStorage.getItem(NK)||'{}'); r[dayKey(day)]=text; localStorage.setItem(NK,JSON.stringify(r)); } catch{}
+}
+
+// ── STATE ─────────────────────────────────────────────
+let viewDay = 1;
+let notesSaveTimer = null;
+
+// ── RENDER ────────────────────────────────────────────
+function pplCycle(day) { return ((day-1)%7)+1; }
+
+function renderHeader() {
+  const td = todayNum();
+  const pct = Math.round((td/75)*100);
+  const circ = 2*Math.PI*30;
+  document.getElementById('ringFill').setAttribute('stroke-dashoffset', circ*(1-pct/100));
+  document.getElementById('ringPct').textContent = pct+'%';
+}
+
+function renderDayView() {
+  const td = todayNum();
+  const cycle = pplCycle(viewDay);
+  const train = PPL[cycle];
+  const mobKey = MOB_MAP[cycle];
+
+  // day label
+  document.getElementById('viewingDay').textContent = viewDay;
+
+  // sub label
+  const start = getStart();
+  const dayDate = new Date(start.getTime() + (viewDay-1)*86400000);
+  const dateStr = dayDate.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+  let sub = dateStr;
+  if (viewDay === td) sub += ' · Today';
+  else if (viewDay < td) sub += ` · ${td-viewDay} day${td-viewDay===1?'':'s'} ago`;
+  else sub += ` · in ${viewDay-td} day${viewDay-td===1?'':'s'}`;
+  document.getElementById('daySubLabel').textContent = sub;
+
+  // hero
+  document.getElementById('hLift').textContent = train.label;
+  document.getElementById('hLift').style.color = train.color;
+  document.getElementById('hFocus').textContent = train.detail.split(' · ').slice(0,2).join(' · ');
+  document.getElementById('hFocusSub').textContent = train.detail.split(' · ').slice(2).join(' · ');
+  document.getElementById('hMob').textContent = MOB_LABEL[mobKey];
+  document.getElementById('hMob').style.color = MOB_COLOR[mobKey];
+
+  // arrows
+  document.getElementById('prevBtn').disabled = viewDay <= 1;
+  document.getElementById('nextBtn').disabled = viewDay >= 75;
+
+  // banner
+  const banner = document.getElementById('dayBanner');
+  if (viewDay < td) {
+    banner.className = 'day-banner past';
+    banner.innerHTML = `📅 Viewing Day ${viewDay} — ${td-viewDay} day${td-viewDay===1?'':'s'} ago`;
+    banner.style.display='flex';
+  } else if (viewDay > td) {
+    banner.className = 'day-banner future';
+    banner.innerHTML = `🔮 Viewing Day ${viewDay} — ${viewDay-td} day${viewDay-td===1?'':'s'} ahead`;
+    banner.style.display='flex';
+  } else {
+    banner.style.display='none';
+  }
+
+  // completed
+  document.getElementById('completedBanner').style.display = (viewDay===75 && getDayComplete(75)) ? 'block' : 'none';
+
+  renderChecklist();
+  renderTrack();
+  renderNotes();
+}
+
+function renderChecklist() {
+  const checks = getChecks(viewDay);
+  document.getElementById('checkDayNum').textContent = viewDay;
+  document.getElementById('checklistItems').innerHTML = CHECKS.map(item => {
+    const done = !!checks[item.id];
+    return `<div class="check-row ${done?'done':''}" onclick="toggleCheck('${item.id}')">
+      <div class="check-box"><span class="check-tick">✓</span></div>
+      <span class="check-icon">${item.icon}</span>
+      <div><div class="check-text">${item.label}</div><div class="check-sub">${item.sub}</div></div>
+    </div>`;
+  }).join('');
+}
+
+function renderNotes() {
+  const area = document.getElementById('notesArea');
+  area.value = getNotes(viewDay);
+  document.getElementById('notesSaved').classList.remove('show');
+}
+
+function setupNotesAutosave() {
+  document.getElementById('notesArea').addEventListener('input', function() {
+    clearTimeout(notesSaveTimer);
+    notesSaveTimer = setTimeout(() => {
+      saveNotes(viewDay, this.value);
+      const s = document.getElementById('notesSaved');
+      s.classList.add('show');
+      setTimeout(() => s.classList.remove('show'), 1800);
+    }, 600);
+  });
+}
+
+function renderTrack() {
+  const td = todayNum();
+  const track = document.getElementById('progTrack');
+  track.innerHTML = '';
+  for (let d = 1; d <= 75; d++) {
+    const el = document.createElement('div');
+    el.className = 'prog-day';
+    el.title = `Day ${d}`;
+    if (d === viewDay) el.classList.add('viewing');
+    if (d === td) { el.classList.add('today'); }
+    else if (d < td) {
+      if (getDayComplete(d)) el.classList.add('complete');
+      else if (getDayPartial(d)) el.classList.add('partial');
+      else el.classList.add('missed');
+    } else {
+      el.classList.add('future');
+    }
+    el.addEventListener('click', () => { viewDay = d; renderDayView(); });
+    track.appendChild(el);
+  }
+  // scroll viewing day into center
+  const pill = track.children[viewDay-1];
+  if (pill) pill.scrollIntoView({inline:'center', behavior:'smooth', block:'nearest'});
+}
+
+function renderSchedule() {
+  document.getElementById('tab-schedule').innerHTML = '<div class="fade-in">'+
+    SCHEDULE.map(r => {
+      const t = TAG[r.tag];
+      return `<div class="sched-row" style="background:${t.bg};border-color:${t.border}">
+        <div class="sched-time">${r.time}</div>
+        <div class="sched-block-wrap"><div class="dot" style="background:${t.dot}"></div><div class="sched-block">${r.block}</div></div>
+        <div class="sched-detail">${r.detail}</div>
+      </div>`;
+    }).join('')+'</div>';
+}
+
+function renderNutrition() {
+  document.getElementById('mealCards').innerHTML = MEALS.map(m => `
+    <div class="meal-card">
+      <div class="meal-hd">
+        <div class="meal-title">${m.label}</div>
+        <div class="meal-macros">
+          <span style="color:var(--amber)">${m.cal}</span>
+          <span style="color:var(--green)">${m.protein} protein</span>
+        </div>
+      </div>
+      ${m.items.map(i=>`<div class="meal-item"><span class="meal-dash">—</span>${i}</div>`).join('')}
+    </div>`).join('');
+}
+
+function renderMobility() {
+  document.getElementById('coreRows').innerHTML = CORE.map(e=>
+    `<div class="mob-row"><div class="mob-name">${e.name}</div><div class="mob-sets">${e.sets}</div></div>`).join('');
+  document.getElementById('hipRows').innerHTML = HIP.map(e=>
+    `<div class="mob-row"><div class="mob-name">${e.name}</div><div class="mob-sets">${e.sets}</div></div>`).join('');
+}
+
+function renderSupplements() {
+  document.getElementById('suppRows').innerHTML = SUPPS.map(s=>
+    `<div class="supp-row">
+      <div class="supp-time">${s.time}</div>
+      <div class="supp-name">${s.item}</div>
+      <div class="supp-note">${s.note}</div>
+    </div>`).join('');
+}
+
+// ── NAVIGATION ────────────────────────────────────────
+function navigateDay(delta) {
+  viewDay = Math.max(1, Math.min(75, viewDay + delta));
+  renderDayView();
+}
+function goToToday() {
+  viewDay = todayNum();
+  renderDayView();
+}
+
+// ── TABS ──────────────────────────────────────────────
+function switchTab(name, e) {
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  const pane = document.getElementById('tab-'+name);
+  pane.classList.add('active');
+  void pane.offsetWidth;
+  pane.classList.add('fade-in');
+  if (e) e.target.classList.add('active');
+}
+
+// ── DATE EDITOR ───────────────────────────────────────
+function showDateEdit() {
+  const s = getStart();
+  const y = s.getFullYear(), m = String(s.getMonth()+1).padStart(2,'0'), d = String(s.getDate()).padStart(2,'0');
+  document.getElementById('dateInput').value = `${y}-${m}-${d}`;
+  document.getElementById('dateEditArea').style.display='inline-flex';
+  document.getElementById('editDateBtn').style.display='none';
+}
+function hideDateEdit() {
+  document.getElementById('dateEditArea').style.display='none';
+  document.getElementById('editDateBtn').style.display='';
+}
+function saveStartDate() {
+  const v = document.getElementById('dateInput').value;
+  if (!v) return;
+  const d = new Date(v+'T00:00:00');
+  localStorage.setItem(SK, d.toISOString());
+  hideDateEdit();
+  viewDay = todayNum();
+  renderHeader(); renderDayView();
+}
+
+// ── KEYBOARD ──────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') return;
+  if (e.key === 'ArrowLeft')  navigateDay(-1);
+  if (e.key === 'ArrowRight') navigateDay(1);
+  if (e.key === 't' || e.key === 'T') goToToday();
+});
+
+// ── INIT ──────────────────────────────────────────────
+function init() {
+  viewDay = todayNum();
+  renderHeader();
+  renderDayView();
+  renderSchedule();
+  renderNutrition();
+  renderMobility();
+  renderSupplements();
+  setupNotesAutosave();
+}
+init();
+</script>
+</body>
+</html>
