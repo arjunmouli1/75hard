@@ -6,171 +6,198 @@
 <title>75 HARD — Daily Protocol</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #f8f7f4;
-    --bg2: #ffffff;
-    --bg3: #f1f0ed;
-    --border: #e2ddd8;
-    --border2: #ede9e4;
-    --orange: #d94f00;
-    --orange2: #f07030;
-    --green: #1a7a4a;
-    --blue: #1a6fa8;
-    --purple: #7c4daa;
-    --amber: #b07800;
-    --red: #c0392b;
-    --muted: #6b6560;
-    --muted2: #8a837c;
-    --text: #1a1714;
-    --text2: #3d3630;
-    --text3: #5a524c;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { background: var(--bg); color: var(--text); font-family: 'Barlow Condensed', sans-serif; min-height: 100vh; }
-  ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-thumb { background: #d0ccc7; border-radius: 2px; }
+:root {
+  --bg:#f8f7f4; --bg2:#fff; --bg3:#f1f0ed;
+  --border:#e2ddd8; --border2:#ede9e4;
+  --orange:#d94f00; --orange2:#f07030;
+  --green:#1a7a4a; --blue:#1a6fa8; --purple:#7c4daa; --amber:#b07800; --red:#c0392b;
+  --muted:#6b6560; --muted2:#8a837c; --text:#1a1714; --text2:#3d3630; --text3:#5a524c;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{background:var(--bg);color:var(--text);font-family:'Barlow Condensed',sans-serif;min-height:100vh;}
+::-webkit-scrollbar{width:4px;} ::-webkit-scrollbar-thumb{background:#d0ccc7;border-radius:2px;}
+@keyframes fadeup{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes glow-pulse{0%,100%{box-shadow:0 0 16px rgba(26,122,74,.2)}50%{box-shadow:0 0 28px rgba(26,122,74,.4)}}
+.fade-in{animation:fadeup .3s ease forwards;}
 
-  @keyframes fadeup { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
-  @keyframes glow-pulse { 0%,100%{box-shadow:0 0 16px rgba(26,122,74,.2)} 50%{box-shadow:0 0 28px rgba(26,122,74,.4)} }
-  .fade-in { animation: fadeup .3s ease forwards; }
+/* HEADER */
+#header{background:linear-gradient(160deg,#fff8f4 0%,#fff 100%);border-bottom:2px solid var(--border);padding:22px 28px 16px;}
+.header-inner{max-width:940px;margin:0 auto;}
+.header-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;}
+.badge{font-size:10px;letter-spacing:4px;color:var(--orange);font-weight:700;margin-bottom:5px;}
+.day-display{font-size:48px;font-weight:900;line-height:1;letter-spacing:-1px;color:var(--text);}
+.day-display span.num{color:var(--orange);}
+.day-display span.denom{color:#ccc7c0;}
+.subtitle{font-size:12px;color:var(--muted);margin-top:6px;letter-spacing:1px;}
+.subtitle .started{color:#bbb5ae;margin-left:14px;}
 
-  /* HEADER */
-  #header {
-    background: linear-gradient(160deg, #fff8f4 0%, #fff 100%);
-    border-bottom: 2px solid var(--border);
-    padding: 26px 28px 18px;
-  }
-  .header-inner { max-width: 940px; margin: 0 auto; }
-  .header-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; }
-  .badge { font-size: 10px; letter-spacing: 4px; color: var(--orange); font-weight: 700; margin-bottom: 6px; }
-  .day-display { font-size: 52px; font-weight: 900; line-height: 1; letter-spacing: -1px; color: var(--text); }
-  .day-display span.num { color: var(--orange); }
-  .day-display span.denom { color: #ccc7c0; }
-  .subtitle { font-size: 12px; color: var(--muted); margin-top: 8px; letter-spacing: 1px; }
-  .subtitle .started { color: #bbb5ae; margin-left: 14px; }
+/* DAY NAV */
+.day-nav{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
+.nav-btn{background:#fff;border:1px solid var(--border);border-radius:6px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;transition:all .15s;color:var(--text2);flex-shrink:0;}
+.nav-btn:hover{background:var(--bg3);border-color:var(--muted);}
+.nav-btn:disabled{opacity:.3;cursor:default;}
+.nav-today{font-size:11px;color:var(--orange);background:none;border:1px solid var(--orange);border-radius:5px;padding:4px 10px;cursor:pointer;font-family:inherit;letter-spacing:1px;transition:background .2s;}
+.nav-today:hover{background:rgba(217,79,0,.07);}
+.day-select{background:#fff;border:1px solid var(--border);color:var(--text);font-family:inherit;font-size:13px;font-weight:700;padding:5px 10px;border-radius:6px;cursor:pointer;-webkit-appearance:none;text-align:center;}
+.viewing-badge{font-size:10px;background:#fff8f4;border:1px solid #f5c8b0;color:var(--orange);padding:4px 10px;border-radius:5px;letter-spacing:1px;font-weight:600;}
+.viewing-badge.is-today{background:#f0fff6;border-color:#b0e0c8;color:var(--green);}
 
-  .ring-wrap { position: relative; width: 88px; height: 88px; flex-shrink: 0; }
-  .ring-wrap svg { transform: rotate(-90deg); }
-  .ring-track { fill: none; stroke: #e8e3dd; stroke-width: 5; }
-  .ring-fill { fill: none; stroke: var(--orange); stroke-width: 5; stroke-linecap: round; transition: stroke-dashoffset 1.2s ease; }
-  .ring-label { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-  .ring-pct { font-size: 22px; font-weight: 900; color: var(--text); line-height: 1; }
-  .ring-sub { font-size: 9px; color: var(--muted2); letter-spacing: 1px; }
+/* RING */
+.ring-wrap{position:relative;width:84px;height:84px;flex-shrink:0;}
+.ring-wrap svg{transform:rotate(-90deg);}
+.ring-track{fill:none;stroke:#e8e3dd;stroke-width:5;}
+.ring-fill{fill:none;stroke:var(--orange);stroke-width:5;stroke-linecap:round;transition:stroke-dashoffset 1.2s ease;}
+.ring-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.ring-pct{font-size:20px;font-weight:900;color:var(--text);line-height:1;}
+.ring-sub{font-size:9px;color:var(--muted2);letter-spacing:1px;}
 
-  .prog-bar-wrap { height: 3px; background: #e8e3dd; border-radius: 2px; margin-bottom: 18px; }
-  .prog-bar { height: 100%; background: linear-gradient(90deg, var(--orange), var(--orange2)); border-radius: 2px; transition: width 1.2s ease; }
+.prog-bar-wrap{height:3px;background:#e8e3dd;border-radius:2px;margin-bottom:16px;}
+.prog-bar{height:100%;background:linear-gradient(90deg,var(--orange),var(--orange2));border-radius:2px;transition:width 1.2s ease;}
 
-  .stat-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
-  .stat-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
-  .stat-label { font-size: 9px; color: var(--muted2); letter-spacing: 2px; margin-bottom: 5px; }
-  .stat-val { font-size: 14px; font-weight: 800; letter-spacing: .5px; }
+.stat-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
+.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:9px 10px;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.stat-label{font-size:9px;color:var(--muted2);letter-spacing:2px;margin-bottom:4px;}
+.stat-val{font-size:13px;font-weight:800;letter-spacing:.5px;}
 
-  .date-row { margin-top: 14px; display: flex; align-items: center; gap: 10px; }
-  .btn-ghost { font-size: 10px; color: var(--muted2); letter-spacing: 1.5px; background: none; border: 1px solid var(--border); padding: 4px 10px; border-radius: 4px; cursor: pointer; font-family: inherit; transition: all .2s; }
-  .btn-ghost:hover { color: var(--text2); border-color: var(--muted); }
-  .btn-accent { font-size: 11px; color: var(--orange); background: none; border: 1px solid var(--orange); padding: 5px 12px; border-radius: 4px; cursor: pointer; font-family: inherit; letter-spacing: 1px; transition: background .2s; }
-  .btn-accent:hover { background: rgba(217,79,0,.08); }
-  input[type=date] { background: #fff; border: 1px solid var(--border); color: var(--text); font-family: inherit; padding: 5px 10px; border-radius: 4px; font-size: 13px; cursor: pointer; }
+.date-row{margin-top:12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.btn-ghost{font-size:10px;color:var(--muted2);letter-spacing:1.5px;background:none;border:1px solid var(--border);padding:4px 10px;border-radius:4px;cursor:pointer;font-family:inherit;transition:all .2s;}
+.btn-ghost:hover{color:var(--text2);border-color:var(--muted);}
+.btn-accent{font-size:11px;color:var(--orange);background:none;border:1px solid var(--orange);padding:5px 12px;border-radius:4px;cursor:pointer;font-family:inherit;letter-spacing:1px;transition:background .2s;}
+.btn-accent:hover{background:rgba(217,79,0,.08);}
+input[type=date]{background:#fff;border:1px solid var(--border);color:var(--text);font-family:inherit;padding:5px 10px;border-radius:4px;font-size:13px;cursor:pointer;}
 
-  /* RULES STRIP */
-  #rules-strip { background: #fff; border-bottom: 1px solid var(--border); padding: 14px 28px; }
-  .rules-inner { max-width: 940px; margin: 0 auto; }
-  .rules-title { font-size: 9px; color: var(--orange); letter-spacing: 3px; margin-bottom: 10px; font-weight: 700; }
-  .rules-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-  .rule-card { border: 1px solid var(--border); background: var(--bg); border-radius: 8px; padding: 11px 14px; display: flex; align-items: center; gap: 12px; }
-  .rule-icon { font-size: 18px; flex-shrink: 0; }
-  .rule-name { font-size: 13px; font-weight: 700; color: var(--text); }
-  .rule-sub { font-size: 11px; color: var(--muted); font-family: 'Barlow', sans-serif; }
+/* RULES */
+#rules-strip{background:#fff;border-bottom:1px solid var(--border);padding:12px 28px;}
+.rules-inner{max-width:940px;margin:0 auto;}
+.rules-title{font-size:9px;color:var(--orange);letter-spacing:3px;margin-bottom:8px;font-weight:700;}
+.rules-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;}
+.rule-card{border:1px solid var(--border);background:var(--bg);border-radius:7px;padding:9px 12px;display:flex;align-items:center;gap:10px;}
+.rule-icon{font-size:16px;flex-shrink:0;}
+.rule-name{font-size:12px;font-weight:700;color:var(--text);}
+.rule-sub{font-size:10px;color:var(--muted);font-family:'Barlow',sans-serif;}
 
-  /* TABS */
-  #main { max-width: 940px; margin: 0 auto; padding: 0 28px 60px; }
-  .tab-bar { display: flex; gap: 24px; border-bottom: 2px solid var(--border2); margin-bottom: 22px; margin-top: 6px; overflow-x: auto; }
-  .tab-btn { background: none; border: none; color: var(--muted2); font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 2px; cursor: pointer; padding: 10px 0; border-bottom: 2px solid transparent; transition: all .2s; margin-bottom: -2px; white-space: nowrap; }
-  .tab-btn.active { color: var(--orange); border-bottom-color: var(--orange); }
-  .tab-btn:hover:not(.active) { color: var(--text2); }
-  .tab-pane { display: none; }
-  .tab-pane.active { display: block; }
+/* TABS */
+#main{max-width:940px;margin:0 auto;padding:0 28px 60px;}
+.tab-bar{display:flex;gap:22px;border-bottom:2px solid var(--border2);margin-bottom:20px;margin-top:6px;overflow-x:auto;}
+.tab-btn{background:none;border:none;color:var(--muted2);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;letter-spacing:2px;cursor:pointer;padding:9px 0;border-bottom:2px solid transparent;transition:all .2s;margin-bottom:-2px;white-space:nowrap;}
+.tab-btn.active{color:var(--orange);border-bottom-color:var(--orange);}
+.tab-btn:hover:not(.active){color:var(--text2);}
+.tab-pane{display:none;}
+.tab-pane.active{display:block;}
+.section-check-title{font-size:9px;color:var(--orange);letter-spacing:3px;font-weight:700;margin-bottom:10px;margin-top:22px;padding-top:18px;border-top:1px solid var(--border2);}
 
-  /* SECTION CHECKLIST HEADER */
-  .section-check-title { font-size: 9px; color: var(--orange); letter-spacing: 3px; font-weight: 700; margin-bottom: 12px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border2); }
-  .section-check-title:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+/* LOCKED DAY NOTICE */
+.locked-notice{background:#fffbf0;border:1px solid #f0e0a0;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:12px;font-family:'Barlow',sans-serif;color:#8a6800;display:flex;align-items:center;gap:10px;}
 
-  /* SCHEDULE */
-  .sched-row { display: grid; grid-template-columns: 72px 165px 1fr; align-items: start; gap: 14px; padding: 11px 14px; border-radius: 8px; margin-bottom: 7px; border: 1px solid; transition: all .15s; }
-  .sched-row:hover { box-shadow: 0 2px 8px rgba(0,0,0,.06); }
-  .sched-time { font-size: 12px; color: var(--muted2); font-family: 'Barlow', sans-serif; padding-top: 1px; }
-  .sched-block-wrap { display: flex; align-items: center; gap: 8px; }
-  .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-  .sched-block { font-size: 13px; font-weight: 700; color: var(--text2); letter-spacing: .5px; }
-  .sched-detail { font-size: 12px; color: var(--text3); font-family: 'Barlow', sans-serif; line-height: 1.55; }
+/* SCHEDULE */
+.sched-row{display:grid;grid-template-columns:72px 160px 1fr;align-items:start;gap:12px;padding:10px 13px;border-radius:7px;margin-bottom:6px;border:1px solid;transition:all .15s;}
+.sched-row:hover{box-shadow:0 2px 8px rgba(0,0,0,.06);}
+.sched-time{font-size:12px;color:var(--muted2);font-family:'Barlow',sans-serif;padding-top:1px;}
+.sched-block-wrap{display:flex;align-items:center;gap:7px;}
+.dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.sched-block{font-size:13px;font-weight:700;color:var(--text2);letter-spacing:.5px;}
+.sched-detail{font-size:12px;color:var(--text3);font-family:'Barlow',sans-serif;line-height:1.55;}
 
-  /* NUTRITION */
-  .macro-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 20px; }
-  .macro-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
-  .macro-label { font-size: 9px; color: var(--muted2); letter-spacing: 2px; margin-bottom: 7px; }
-  .macro-val { font-size: 26px; font-weight: 900; }
-  .meal-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px; margin-bottom: 10px; box-shadow: 0 1px 4px rgba(0,0,0,.04); }
-  .meal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-  .meal-title { font-size: 14px; font-weight: 700; letter-spacing: .5px; }
-  .meal-macros { display: flex; gap: 12px; font-size: 12px; font-family: 'Barlow', sans-serif; }
-  .meal-item { font-size: 12px; color: var(--text3); font-family: 'Barlow', sans-serif; line-height: 1.7; display: flex; gap: 8px; }
-  .meal-dash { color: #c8c0b8; }
+/* NUTRITION */
+.macro-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;}
+.macro-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:11px 13px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.macro-label{font-size:9px;color:var(--muted2);letter-spacing:2px;margin-bottom:6px;}
+.macro-val{font-size:24px;font-weight:900;}
+.meal-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:13px 16px;margin-bottom:9px;box-shadow:0 1px 4px rgba(0,0,0,.04);}
+.meal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;}
+.meal-title{font-size:14px;font-weight:700;}
+.meal-macros{display:flex;gap:10px;font-size:12px;font-family:'Barlow',sans-serif;}
+.meal-item{font-size:12px;color:var(--text3);font-family:'Barlow',sans-serif;line-height:1.7;display:flex;gap:8px;}
+.meal-dash{color:#c8c0b8;}
 
-  /* MOBILITY */
-  .mob-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .mob-title { font-size: 11px; letter-spacing: 2px; font-weight: 700; margin-bottom: 14px; }
-  .mob-row { background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; margin-bottom: 7px; display: flex; justify-content: space-between; align-items: center; }
-  .mob-name { font-size: 13px; font-weight: 600; color: var(--text2); }
-  .mob-sets { font-size: 12px; color: var(--muted); font-family: 'Barlow', sans-serif; }
+/* MOBILITY */
+.mob-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.mob-title{font-size:11px;letter-spacing:2px;font-weight:700;margin-bottom:12px;}
+.mob-row{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:9px 13px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;}
+.mob-name{font-size:13px;font-weight:600;color:var(--text2);}
+.mob-sets{font-size:12px;color:var(--muted);font-family:'Barlow',sans-serif;}
 
-  /* SUPPLEMENTS */
-  .flag-box { background: #fff8f4; border: 1px solid #f5c8b0; border-radius: 8px; padding: 12px 16px; margin-bottom: 18px; font-size: 12px; font-family: 'Barlow', sans-serif; line-height: 1.6; color: #8a4020; }
-  .flag-box span { color: var(--orange); font-weight: 600; }
-  .supp-row { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 12px 18px; margin-bottom: 8px; display: grid; grid-template-columns: 80px 200px 1fr; align-items: center; gap: 14px; }
-  .supp-time { font-size: 12px; color: var(--muted2); font-family: 'Barlow', sans-serif; }
-  .supp-name { font-size: 13px; font-weight: 700; color: var(--text2); }
-  .supp-note { font-size: 12px; color: var(--muted); font-family: 'Barlow', sans-serif; }
-  .skin-box { margin-top: 20px; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px; }
-  .skin-title { font-size: 10px; letter-spacing: 2px; color: var(--muted2); margin-bottom: 12px; font-weight: 700; }
-  .skin-row { display: flex; gap: 16px; margin-bottom: 9px; }
-  .skin-label { font-size: 11px; color: #b05080; min-width: 52px; font-weight: 700; }
-  .skin-note { font-size: 12px; color: var(--muted); font-family: 'Barlow', sans-serif; line-height: 1.5; }
+/* SUPPLEMENTS */
+.flag-box{background:#fff8f4;border:1px solid #f5c8b0;border-radius:8px;padding:11px 15px;margin-bottom:16px;font-size:12px;font-family:'Barlow',sans-serif;line-height:1.6;color:#8a4020;}
+.flag-box span{color:var(--orange);font-weight:600;}
+.supp-row{background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:11px 16px;margin-bottom:7px;display:grid;grid-template-columns:80px 190px 1fr;align-items:center;gap:12px;}
+.supp-time{font-size:12px;color:var(--muted2);font-family:'Barlow',sans-serif;}
+.supp-name{font-size:13px;font-weight:700;color:var(--text2);}
+.supp-note{font-size:12px;color:var(--muted);font-family:'Barlow',sans-serif;}
+.skin-box{margin-top:18px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:13px 16px;}
+.skin-title{font-size:10px;letter-spacing:2px;color:var(--muted2);margin-bottom:10px;font-weight:700;}
+.skin-row{display:flex;gap:14px;margin-bottom:8px;}
+.skin-label{font-size:11px;color:#b05080;min-width:50px;font-weight:700;}
+.skin-note{font-size:12px;color:var(--muted);font-family:'Barlow',sans-serif;line-height:1.5;}
 
-  /* CHECKLISTS (shared) */
-  .check-section { margin-bottom: 8px; }
-  .check-title { font-size: 9px; color: var(--orange); letter-spacing: 3px; font-weight: 700; margin-bottom: 10px; }
-  .check-row { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 7px; cursor: pointer; transition: all .15s; user-select: none; box-shadow: 0 1px 3px rgba(0,0,0,.03); }
-  .check-row:hover { background: #f5f3f0; box-shadow: 0 2px 6px rgba(0,0,0,.07); }
-  .check-row.done { opacity: .55; }
-  .check-row.done .check-text { text-decoration: line-through; }
-  .check-row.done .check-sub { text-decoration: line-through; }
-  .check-box { width: 20px; height: 20px; border: 2px solid var(--border); border-radius: 5px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all .2s; background: #fff; }
-  .check-row.done .check-box { background: var(--green); border-color: var(--green); }
-  .check-box-tick { color: #fff; font-size: 12px; font-weight: 900; display: none; }
-  .check-row.done .check-box-tick { display: block; }
-  .check-text { font-size: 13px; font-weight: 600; color: var(--text2); }
-  .check-sub { font-size: 11px; color: var(--muted); font-family: 'Barlow', sans-serif; }
-  .reset-btn { width: 100%; margin-top: 10px; padding: 11px; background: #fff; border: 1px solid var(--border); border-radius: 8px; color: var(--muted2); font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 2px; cursor: pointer; transition: all .2s; }
-  .reset-btn:hover { background: var(--bg3); color: var(--text2); }
-  .complete-banner { background: linear-gradient(135deg, #f0fff6, #e8faf0); border: 1px solid #a8dfc0; border-radius: 10px; padding: 24px; text-align: center; margin-bottom: 16px; animation: glow-pulse 3s infinite; }
-  .complete-num { font-size: 56px; font-weight: 900; color: var(--green); line-height: 1; }
-  .complete-label { font-size: 12px; color: var(--green); letter-spacing: 3px; margin-top: 6px; }
+/* CHECKLISTS */
+.check-row{display:flex;align-items:center;gap:11px;padding:9px 13px;background:var(--bg2);border:1px solid var(--border);border-radius:7px;margin-bottom:6px;cursor:pointer;transition:all .15s;user-select:none;box-shadow:0 1px 3px rgba(0,0,0,.03);}
+.check-row:hover:not(.locked){background:#f5f3f0;box-shadow:0 2px 6px rgba(0,0,0,.07);}
+.check-row.locked{cursor:default;opacity:.6;}
+.check-row.done{opacity:.5;}
+.check-row.done .check-text,.check-row.done .check-sub{text-decoration:line-through;}
+.check-box{width:20px;height:20px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;background:#fff;}
+.check-row.done .check-box{background:var(--green);border-color:var(--green);}
+.check-row.locked .check-box{background:var(--bg3);}
+.check-box-tick{color:#fff;font-size:11px;font-weight:900;display:none;}
+.check-row.done .check-box-tick{display:block;}
+.check-text{font-size:13px;font-weight:600;color:var(--text2);}
+.check-sub{font-size:11px;color:var(--muted);font-family:'Barlow',sans-serif;}
+.reset-btn{width:100%;margin-top:8px;padding:10px;background:#fff;border:1px solid var(--border);border-radius:7px;color:var(--muted2);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:2px;cursor:pointer;transition:all .2s;}
+.reset-btn:hover{background:var(--bg3);color:var(--text2);}
+.complete-banner{background:linear-gradient(135deg,#f0fff6,#e8faf0);border:1px solid #a8dfc0;border-radius:10px;padding:22px;text-align:center;margin-bottom:14px;animation:glow-pulse 3s infinite;}
+.complete-num{font-size:52px;font-weight:900;color:var(--green);line-height:1;}
+.complete-label{font-size:12px;color:var(--green);letter-spacing:3px;margin-top:5px;}
+.day-progress-bar{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:11px 15px;margin-bottom:14px;display:flex;align-items:center;gap:12px;}
+.day-prog-label{font-size:10px;color:var(--muted2);letter-spacing:1.5px;flex-shrink:0;}
+.day-prog-track{flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;}
+.day-prog-fill{height:100%;background:linear-gradient(90deg,var(--green),#38a86a);border-radius:3px;transition:width .4s ease;}
+.day-prog-count{font-size:12px;font-weight:700;color:var(--green);flex-shrink:0;}
 
-  /* PROGRESS SUMMARY BAR */
-  .day-progress-bar { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; display: flex; align-items: center; gap: 14px; }
-  .day-prog-label { font-size: 10px; color: var(--muted2); letter-spacing: 1.5px; flex-shrink: 0; }
-  .day-prog-track { flex: 1; height: 6px; background: var(--bg3); border-radius: 3px; overflow: hidden; }
-  .day-prog-fill { height: 100%; background: linear-gradient(90deg, var(--green), #38a86a); border-radius: 3px; transition: width .4s ease; }
-  .day-prog-count { font-size: 12px; font-weight: 700; color: var(--green); flex-shrink: 0; }
+/* METRICS */
+.metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:22px;}
+.met-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.04);}
+.met-label{font-size:9px;color:var(--muted2);letter-spacing:2px;margin-bottom:8px;}
+.met-val{font-size:30px;font-weight:900;line-height:1;}
+.met-sub{font-size:11px;color:var(--muted);font-family:'Barlow',sans-serif;margin-top:4px;}
+.cat-section{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px 18px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.04);}
+.cat-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.cat-title{font-size:13px;font-weight:700;letter-spacing:.5px;}
+.cat-pct{font-size:20px;font-weight:900;}
+.cat-bar-wrap{height:8px;background:var(--bg3);border-radius:4px;margin-bottom:10px;overflow:hidden;}
+.cat-bar{height:100%;border-radius:4px;transition:width .8s ease;}
+.cat-items{display:grid;grid-template-columns:repeat(75,1fr);gap:2px;margin-top:10px;}
+.day-dot{width:100%;padding-bottom:100%;border-radius:2px;cursor:pointer;transition:transform .1s;}
+.day-dot:hover{transform:scale(1.3);}
+.day-dot.empty{background:var(--bg3);}
+.day-dot.full{background:var(--green);}
+.day-dot.partial{background:var(--amber);}
+.day-dot.future{background:var(--border);}
+.day-dot.today-marker{outline:2px solid var(--orange);outline-offset:1px;}
+.heatmap-legend{display:flex;align-items:center;gap:14px;margin-top:8px;font-size:11px;color:var(--muted);font-family:'Barlow',sans-serif;}
+.legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
+.streak-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px;}
+.streak-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.streak-val{font-size:28px;font-weight:900;color:var(--orange);line-height:1;}
+.streak-label{font-size:10px;color:var(--muted2);letter-spacing:1.5px;margin-top:4px;}
+.item-breakdown{margin-top:12px;}
+.item-row{display:flex;align-items:center;gap:10px;margin-bottom:7px;}
+.item-name{font-size:12px;color:var(--text3);font-family:'Barlow',sans-serif;flex:1;}
+.item-bar-wrap{width:120px;height:5px;background:var(--bg3);border-radius:3px;overflow:hidden;flex-shrink:0;}
+.item-bar{height:100%;border-radius:3px;}
+.item-pct-text{font-size:11px;font-weight:700;min-width:32px;text-align:right;flex-shrink:0;}
 
-  @media (max-width: 640px) {
-    .stat-grid { grid-template-columns: repeat(3,1fr); }
-    .rules-grid { grid-template-columns: 1fr 1fr; }
-    .mob-grid { grid-template-columns: 1fr; }
-    .macro-grid { grid-template-columns: repeat(2,1fr); }
-    .sched-row { grid-template-columns: 60px 1fr; }
-    .supp-row { grid-template-columns: 1fr; gap: 4px; }
-  }
+@media(max-width:640px){
+  .stat-grid{grid-template-columns:repeat(3,1fr);}
+  .rules-grid{grid-template-columns:1fr 1fr;}
+  .mob-grid{grid-template-columns:1fr;}
+  .macro-grid{grid-template-columns:repeat(2,1fr);}
+  .sched-row{grid-template-columns:60px 1fr;}
+  .supp-row{grid-template-columns:1fr;gap:4px;}
+  .metrics-grid{grid-template-columns:repeat(2,1fr);}
+  .streak-row{grid-template-columns:1fr 1fr;}
+  .cat-items{grid-template-columns:repeat(25,1fr);}
+}
 </style>
 </head>
 <body>
@@ -181,31 +208,35 @@
       <div>
         <div class="badge">◆ 75 HARD PROTOCOL</div>
         <div class="day-display">DAY <span class="num" id="dayNum">1</span><span class="denom"> / 75</span></div>
-        <div class="subtitle">
-          <span id="daysLeft">74 DAYS REMAINING</span>
-          <span class="started" id="startedLabel"></span>
-        </div>
+        <div class="subtitle"><span id="daysLeft">74 DAYS REMAINING</span><span class="started" id="startedLabel"></span></div>
       </div>
       <div class="ring-wrap">
-        <svg width="88" height="88" viewBox="0 0 88 88">
-          <circle class="ring-track" cx="44" cy="44" r="37"/>
-          <circle class="ring-fill" id="ringFill" cx="44" cy="44" r="37" stroke-dasharray="232.48" stroke-dashoffset="232.48"/>
+        <svg width="84" height="84" viewBox="0 0 84 84">
+          <circle class="ring-track" cx="42" cy="42" r="36"/>
+          <circle class="ring-fill" id="ringFill" cx="42" cy="42" r="36" stroke-dasharray="226.19" stroke-dashoffset="226.19"/>
         </svg>
-        <div class="ring-label">
-          <div class="ring-pct" id="ringPct">0%</div>
-          <div class="ring-sub">DONE</div>
-        </div>
+        <div class="ring-label"><div class="ring-pct" id="ringPct">0%</div><div class="ring-sub">DONE</div></div>
       </div>
     </div>
+
+    <!-- DAY NAVIGATION -->
+    <div class="day-nav">
+      <button class="nav-btn" id="navPrev" onclick="navigateDay(-1)" title="Previous day">←</button>
+      <select class="day-select" id="dayJump" onchange="jumpToDay(this.value)"></select>
+      <button class="nav-btn" id="navNext" onclick="navigateDay(1)" title="Next day">→</button>
+      <button class="nav-today" onclick="goToToday()">TODAY</button>
+      <span class="viewing-badge" id="viewingBadge">TODAY</span>
+    </div>
+
     <div class="prog-bar-wrap"><div class="prog-bar" id="progBar" style="width:0%"></div></div>
     <div class="stat-grid">
       <div class="stat-card"><div class="stat-label">LIFTING</div><div class="stat-val" id="statLift" style="color:#d94f00">PUSH</div></div>
-      <div class="stat-card"><div class="stat-label">FOCUS</div><div class="stat-val" id="statFocus" style="color:#6b6560;font-size:12px">Chest · Shoulders</div></div>
+      <div class="stat-card"><div class="stat-label">FOCUS</div><div class="stat-val" id="statFocus" style="color:#6b6560;font-size:11px">Chest · Shoulders</div></div>
       <div class="stat-card"><div class="stat-label">MOBILITY</div><div class="stat-val" id="statMob" style="color:#b07800">CORE</div></div>
       <div class="stat-card"><div class="stat-label">EATING</div><div class="stat-val" style="color:#1a7a4a">12P–7P</div></div>
       <div class="stat-card"><div class="stat-label">FAST</div><div class="stat-val" style="color:#b07800">17 HRS</div></div>
     </div>
-    <div class="date-row" id="dateRow">
+    <div class="date-row">
       <button class="btn-ghost" id="setDateBtn" onclick="showDateEdit()">✎ SET START DATE</button>
       <span id="dateEditArea" style="display:none">
         <input type="date" id="dateInput">
@@ -220,12 +251,12 @@
   <div class="rules-inner">
     <div class="rules-title">75 HARD DAILY RULES — MISS ONE = RESTART DAY 1</div>
     <div class="rules-grid">
-      <div class="rule-card"><span class="rule-icon">🏋️</span><div><div class="rule-name">1hr lift + 30 min cardio</div><div class="rule-sub">Every single day, no exceptions</div></div></div>
+      <div class="rule-card"><span class="rule-icon">🏋️</span><div><div class="rule-name">1hr lift + 30 min cardio</div><div class="rule-sub">Every day, no exceptions</div></div></div>
       <div class="rule-card"><span class="rule-icon">📖</span><div><div class="rule-name">Read 10 pages</div><div class="rule-sub">Non-fiction / self-development</div></div></div>
       <div class="rule-card"><span class="rule-icon">💧</span><div><div class="rule-name">1 gallon of water</div><div class="rule-sub">No exceptions</div></div></div>
       <div class="rule-card"><span class="rule-icon">🥩</span><div><div class="rule-name">Follow your diet</div><div class="rule-sub">2,200 cal · 175g protein · no cheat meals</div></div></div>
       <div class="rule-card"><span class="rule-icon">✨</span><div><div class="rule-name">Skincare routine</div><div class="rule-sub">Cleanser + SPF daily · Pads EOD</div></div></div>
-      <div class="rule-card"><span class="rule-icon">🚫</span><div><div class="rule-name">Zero alcohol / substances</div><div class="rule-sub">No exceptions — restart if broken</div></div></div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><div><div class="rule-name">Zero alcohol / substances</div><div class="rule-sub">Miss one rule = restart Day 1</div></div></div>
     </div>
   </div>
 </div>
@@ -237,6 +268,7 @@
     <button class="tab-btn" onclick="switchTab('nutrition',this)">NUTRITION</button>
     <button class="tab-btn" onclick="switchTab('mobility',this)">MOBILITY</button>
     <button class="tab-btn" onclick="switchTab('supplements',this)">SUPPLEMENTS</button>
+    <button class="tab-btn" onclick="switchTab('metrics',this)">METRICS</button>
   </div>
 
   <!-- TODAY TAB -->
@@ -245,16 +277,14 @@
       <div class="complete-num">75</div>
       <div class="complete-label">🔥 PROGRAM COMPLETE — YOU ARE DIFFERENT NOW</div>
     </div>
+    <div id="viewingNotice" class="locked-notice" style="display:none">📅 <span id="viewingNoticeText"></span> — checklist shown read-only. Navigate to today to make changes.</div>
     <div class="day-progress-bar">
-      <div class="day-prog-label">TODAY'S PROGRESS</div>
+      <div class="day-prog-label">DAY <span id="checkDayNum">1</span> PROGRESS</div>
       <div class="day-prog-track"><div class="day-prog-fill" id="todayProgFill" style="width:0%"></div></div>
       <div class="day-prog-count" id="todayProgCount">0 / 0</div>
     </div>
-    <div class="check-section">
-      <div class="check-title">DAY <span id="checkDayNum">1</span> CHECKLIST</div>
-      <div id="checklistItems"></div>
-      <button class="reset-btn" onclick="resetChecklist('today')">⟳ RESET TODAY</button>
-    </div>
+    <div id="checklistItems"></div>
+    <button class="reset-btn" id="resetTodayBtn" onclick="resetChecklist('today')">⟳ RESET THIS DAY</button>
   </div>
 
   <!-- SCHEDULE TAB -->
@@ -282,14 +312,8 @@
   <!-- MOBILITY TAB -->
   <div class="tab-pane" id="tab-mobility">
     <div class="mob-grid">
-      <div>
-        <div class="mob-title" style="color:#b07800">◆ CORE — PPL DAYS 1, 3, 5, 7</div>
-        <div id="coreRows"></div>
-      </div>
-      <div>
-        <div class="mob-title" style="color:#7c4daa">◆ HIP / LOWER BODY — PPL DAYS 2, 4, 6</div>
-        <div id="hipRows"></div>
-      </div>
+      <div><div class="mob-title" style="color:#b07800">◆ CORE — PPL DAYS 1,3,5,7</div><div id="coreRows"></div></div>
+      <div><div class="mob-title" style="color:#7c4daa">◆ HIP / LOWER BODY — PPL DAYS 2,4,6</div><div id="hipRows"></div></div>
     </div>
     <div class="section-check-title">MOBILITY CHECKLIST — DAY <span class="checkDayDisplay"></span></div>
     <div id="mobilityChecklist"></div>
@@ -298,7 +322,7 @@
 
   <!-- SUPPLEMENTS TAB -->
   <div class="tab-pane" id="tab-supplements">
-    <div class="flag-box">⚠ <span>CREATINE FLAG:</span> 15g/day exceeds evidence-based maintenance (3–5g/day). Loading phase is 20g/day for 5–7 days, one-time only. No added benefit from ongoing 15g — increases GI risk.</div>
+    <div class="flag-box">⚠ <span>CREATINE FLAG:</span> 15g/day exceeds evidence-based maintenance (3–5g/day). One-time loading phase only. Ongoing 15g = no added benefit, higher GI risk.</div>
     <div id="suppRows"></div>
     <div class="skin-box">
       <div class="skin-title">SKINCARE PROTOCOL</div>
@@ -309,240 +333,299 @@
     <div id="supplementsChecklist"></div>
     <button class="reset-btn" onclick="resetChecklist('supplements')">⟳ RESET</button>
   </div>
+
+  <!-- METRICS TAB -->
+  <div class="tab-pane" id="tab-metrics">
+    <div id="metricsContent"></div>
+  </div>
 </div>
 
 <script>
-const STORAGE_KEY = '75hard_start';
-const CHECK_KEY   = '75hard_checks_v2';
+const STORAGE_KEY='75hard_start';
+const CHECK_KEY='75hard_checks_v3';
 
-const PPL = {
-  1:{label:'PUSH',  detail:'Chest · Shoulders · Triceps', color:'#d94f00'},
-  2:{label:'PULL',  detail:'Back · Biceps · Rear Delts',  color:'#1a6fa8'},
-  3:{label:'LEGS',  detail:'Quad · Ham · Glute · Calves', color:'#7c4daa'},
-  4:{label:'PUSH',  detail:'Chest · Shoulders · Triceps', color:'#d94f00'},
-  5:{label:'PULL',  detail:'Back · Biceps · Rear Delts',  color:'#1a6fa8'},
-  6:{label:'LEGS',  detail:'Quad · Ham · Glute · Calves', color:'#7c4daa'},
-  7:{label:'ACTIVE RECOVERY', detail:'Zone 2 · 60 min light cardio', color:'#1a7a4a'},
+const PPL={
+  1:{label:'PUSH',detail:'Chest · Shoulders · Triceps',color:'#d94f00'},
+  2:{label:'PULL',detail:'Back · Biceps · Rear Delts',color:'#1a6fa8'},
+  3:{label:'LEGS',detail:'Quad · Ham · Glute · Calves',color:'#7c4daa'},
+  4:{label:'PUSH',detail:'Chest · Shoulders · Triceps',color:'#d94f00'},
+  5:{label:'PULL',detail:'Back · Biceps · Rear Delts',color:'#1a6fa8'},
+  6:{label:'LEGS',detail:'Quad · Ham · Glute · Calves',color:'#7c4daa'},
+  7:{label:'ACTIVE RECOVERY',detail:'Zone 2 · 60 min light cardio',color:'#1a7a4a'},
 };
-const MOBILITY_MAP = {1:'CORE',2:'HIP / LOWER BODY',3:'CORE',4:'HIP / LOWER BODY',5:'CORE',6:'HIP / LOWER BODY',7:'CORE'};
-const MOB_COLOR = {'CORE':'#b07800','HIP / LOWER BODY':'#7c4daa'};
+const MOBILITY_MAP={1:'CORE',2:'HIP / LOWER BODY',3:'CORE',4:'HIP / LOWER BODY',5:'CORE',6:'HIP / LOWER BODY',7:'CORE'};
+const MOB_COLOR={'CORE':'#b07800','HIP / LOWER BODY':'#7c4daa'};
 
-const SCHEDULE = [
-  {time:'5:00 AM', block:'WAKE + SUPPLEMENTS', detail:'16oz water immediately. Creatine + Omega-3. Fasting active — 17hr fast from 7pm prior.', tag:'fast'},
-  {time:'5:10 AM', block:'SKINCARE', detail:'Cleanser (daily). Pads (EOD). Sunscreen before heading out.', tag:'skin'},
-  {time:'5:15 AM', block:'LIFT — 60 MIN', detail:'PPL split per weekly cycle. Full 60-minute session.', tag:'train'},
-  {time:'6:20 AM', block:'CARDIO — 30 MIN', detail:'Treadmill, bike, row, or stairmaster. Can be indoors. Moderate-high intensity.', tag:'train'},
-  {time:'6:55 AM', block:'MOBILITY — 15 MIN', detail:'Core or Hip/Lower Body alternating by PPL day. See Mobility tab.', tag:'train'},
-  {time:'7:15 AM', block:'SHOWER + COFFEE #1', detail:'Black coffee only. Target 32oz water by 8am.', tag:'routine'},
-  {time:'7:30 AM', block:'DEEP WORK', detail:'Heads-down block. Coffee #2 no later than 11:30am. No caffeine after 12pm.', tag:'work'},
-  {time:'10:00 AM', block:'READ — 10 PAGES', detail:'75 Hard requirement. Non-fiction / self-development.', tag:'hard75'},
-  {time:'12:00 PM', block:'BREAK FAST — MEAL 1', detail:'Locale meal delivery. Eating window opens. D3 + K2 + B-Complex taken here.', tag:'eat'},
-  {time:'5:30 PM', block:'MEAL 2', detail:'Second Locale meal. High-protein delivery. Hydration check — 80oz target by now.', tag:'eat'},
-  {time:'7:00 PM', block:'PROTEIN SHAKE + WINDOW CLOSES', detail:'Whey isolate mixed with water. Eating window closes — 17hr fast begins. Steps check.', tag:'eat'},
-  {time:'9:00 PM', block:'WIND-DOWN', detail:'Magnesium L-Threonate + ZMA (empty stomach). EOD skincare pads if scheduled.', tag:'skin'},
-  {time:'9:30 PM', block:'SLEEP', detail:'7–7.5hr. Recovery, hormonal reset. 5am wake = lights out 9:30pm.', tag:'rest'},
+const SCHEDULE=[
+  {time:'5:00 AM',block:'WAKE + SUPPLEMENTS',detail:'16oz water. Creatine (15g) + Omega-3. Fasting active — 17hr fast from 7pm prior.',tag:'fast'},
+  {time:'5:10 AM',block:'SKINCARE',detail:'Cleanser (daily). Pads (EOD). Sunscreen before heading out.',tag:'skin'},
+  {time:'5:15 AM',block:'LIFT — 60 MIN',detail:'PPL split per weekly cycle. Full 60-minute session.',tag:'train'},
+  {time:'6:20 AM',block:'CARDIO — 30 MIN',detail:'Treadmill, bike, row, or stairmaster. Any modality. Moderate-high intensity.',tag:'train'},
+  {time:'6:55 AM',block:'MOBILITY — 15 MIN',detail:'Core or Hip/Lower Body alternating by PPL day. See Mobility tab.',tag:'train'},
+  {time:'7:15 AM',block:'SHOWER + COFFEE #1',detail:'Black coffee only. Target 32oz water by 8am.',tag:'routine'},
+  {time:'7:30 AM',block:'DEEP WORK',detail:'Heads-down block. Coffee #2 no later than 11:30am. No caffeine after 12pm.',tag:'work'},
+  {time:'10:00 AM',block:'READ — 10 PAGES',detail:'75 Hard requirement. Non-fiction / self-development.',tag:'hard75'},
+  {time:'12:00 PM',block:'BREAK FAST — MEAL 1',detail:'Locale meal delivery. D3 + K2 + B-Complex taken here.',tag:'eat'},
+  {time:'5:30 PM',block:'MEAL 2',detail:'Second Locale meal. Protein-first selection.',tag:'eat'},
+  {time:'7:00 PM',block:'PROTEIN SHAKE + WINDOW CLOSES',detail:'Whey isolate + water only. Eating window closes — 17hr fast begins.',tag:'eat'},
+  {time:'9:00 PM',block:'WIND-DOWN',detail:'Magnesium L-Threonate + ZMA (empty stomach). EOD skincare pads if scheduled.',tag:'skin'},
+  {time:'9:30 PM',block:'SLEEP',detail:'7–7.5hr. 5am wake = lights out 9:30pm.',tag:'rest'},
 ];
 
-const TAG = {
-  fast:   {dot:'#b07800', bg:'#fffbf0', border:'#f0e0a0'},
-  skin:   {dot:'#b05080', bg:'#fff5f8', border:'#f0c8d8'},
-  train:  {dot:'#1a7a4a', bg:'#f0fff6', border:'#b0e0c8'},
-  routine:{dot:'#6b6560', bg:'#f8f7f4', border:'#e2ddd8'},
-  work:   {dot:'#1a6fa8', bg:'#f0f8ff', border:'#b0d4f0'},
-  hard75: {dot:'#d94f00', bg:'#fff8f4', border:'#f5c8b0'},
-  eat:    {dot:'#c0392b', bg:'#fff5f4', border:'#f0c8c4'},
-  rest:   {dot:'#7c4daa', bg:'#f8f4ff', border:'#d8c8f0'},
+const TAG={
+  fast:{dot:'#b07800',bg:'#fffbf0',border:'#f0e0a0'},
+  skin:{dot:'#b05080',bg:'#fff5f8',border:'#f0c8d8'},
+  train:{dot:'#1a7a4a',bg:'#f0fff6',border:'#b0e0c8'},
+  routine:{dot:'#6b6560',bg:'#f8f7f4',border:'#e2ddd8'},
+  work:{dot:'#1a6fa8',bg:'#f0f8ff',border:'#b0d4f0'},
+  hard75:{dot:'#d94f00',bg:'#fff8f4',border:'#f5c8b0'},
+  eat:{dot:'#c0392b',bg:'#fff5f4',border:'#f0c8c4'},
+  rest:{dot:'#7c4daa',bg:'#f8f4ff',border:'#d8c8f0'},
 };
 
-const MEALS = [
-  {label:'MEAL 1 — 12:00 PM', cal:'~800–900 cal', protein:'70–80g',
-   items:['Locale high-protein meal delivery — select high-protein option','Prioritize lean protein + vegetables','Avoid heavy carb/starch sides if cutting','D3 + K2 MK7 + B-Complex taken with this meal']},
-  {label:'MEAL 2 — 5:30 PM', cal:'~800–900 cal', protein:'70–80g',
+const MEALS=[
+  {label:'MEAL 1 — 12:00 PM',cal:'~800–900 cal',protein:'70–80g',
+   items:['Locale high-protein meal delivery — select high-protein option','Prioritize lean protein + vegetables','Avoid heavy carb/starch sides','D3 + K2 MK7 + B-Complex taken with this meal']},
+  {label:'MEAL 2 — 5:30 PM',cal:'~800–900 cal',protein:'70–80g',
    items:['Locale high-protein meal delivery — second meal','Balance macros — protein-first selection','Limit sauces / dressings for calorie control']},
-  {label:'PROTEIN SHAKE — 7:00 PM', cal:'~130 cal', protein:'25–30g',
+  {label:'PROTEIN SHAKE — 7:00 PM',cal:'~130 cal',protein:'25–30g',
    items:['Whey isolate mixed with water only (no milk)','Closes eating window — no food after this','Brings daily protein total to ~175g+']},
 ];
 
-const CORE = [
-  {name:'Dead Bug', sets:'3×10 / side'},
-  {name:'Hollow Body Hold', sets:'3×30 sec'},
-  {name:'Ab Wheel Rollout', sets:'3×8–12'},
-  {name:'Copenhagen Plank', sets:'3×20 sec / side'},
-  {name:'Pallof Press', sets:'3×12 / side'},
-  {name:'Hanging Leg Raise', sets:'3×12–15'},
+const CORE=[
+  {name:'Dead Bug',sets:'3×10 / side'},{name:'Hollow Body Hold',sets:'3×30 sec'},
+  {name:'Ab Wheel Rollout',sets:'3×8–12'},{name:'Copenhagen Plank',sets:'3×20 sec / side'},
+  {name:'Pallof Press',sets:'3×12 / side'},{name:'Hanging Leg Raise',sets:'3×12–15'},
 ];
-const HIP = [
-  {name:'90/90 Hip Switches', sets:'2 min continuous'},
-  {name:'Pigeon Pose', sets:'90 sec / side'},
-  {name:'Couch Stretch', sets:'90 sec / side'},
-  {name:'Deep Squat Hold', sets:'2 min'},
-  {name:'Hip Flexor Lunge', sets:'60 sec / side'},
-  {name:'Lateral Band Walk', sets:'3×15 each way'},
-  {name:'Glute Bridge', sets:'3×15'},
+const HIP=[
+  {name:'90/90 Hip Switches',sets:'2 min continuous'},{name:'Pigeon Pose',sets:'90 sec / side'},
+  {name:'Couch Stretch',sets:'90 sec / side'},{name:'Deep Squat Hold',sets:'2 min'},
+  {name:'Hip Flexor Lunge',sets:'60 sec / side'},{name:'Lateral Band Walk',sets:'3×15 each way'},
+  {name:'Glute Bridge',sets:'3×15'},
 ];
-const SUPPS = [
-  {time:'5:00 AM', item:'Creatine (15g)', note:'Pre-training — consider 3×5g split if GI sensitive'},
-  {time:'5:00 AM', item:'Omega-3', note:'With water pre-workout'},
-  {time:'12:00 PM', item:'D3 + K2 MK7', note:'With first meal — fat soluble'},
-  {time:'12:00 PM', item:'B-Complex', note:'With first meal'},
-  {time:'9:00 PM', item:'Magnesium L-Threonate', note:'30–60 min before bed, empty stomach'},
-  {time:'9:00 PM', item:'ZMA', note:'Empty stomach, 30–60 min before bed'},
+const SUPPS=[
+  {time:'5:00 AM',item:'Creatine (15g)',note:'Pre-training — consider 3×5g if GI sensitive'},
+  {time:'5:00 AM',item:'Omega-3',note:'With water pre-workout'},
+  {time:'12:00 PM',item:'D3 + K2 MK7',note:'With first meal — fat soluble'},
+  {time:'12:00 PM',item:'B-Complex',note:'With first meal'},
+  {time:'9:00 PM',item:'Magnesium L-Threonate',note:'30–60 min before bed, empty stomach'},
+  {time:'9:00 PM',item:'ZMA',note:'Empty stomach, 30–60 min before bed'},
 ];
 
-// Checklists per section
-const CHECKS = {
-  today: [
-    {id:'t_lift',   icon:'🏋️', label:'1hr lift complete', sub:'PPL split per cycle'},
-    {id:'t_cardio', icon:'🏃', label:'30 min cardio complete', sub:'Treadmill, bike, row, or stairmaster'},
-    {id:'t_mob',    icon:'🧘', label:'Mobility block complete', sub:'Core or Hip/Lower Body — 15 min'},
-    {id:'t_read',   icon:'📖', label:'Read 10 pages', sub:'Non-fiction / self-development'},
-    {id:'t_water',  icon:'💧', label:'1 gallon of water', sub:'Track throughout the day'},
-    {id:'t_meal1',  icon:'🥗', label:'Meal 1 — Locale delivery', sub:'12pm · high-protein selection'},
-    {id:'t_meal2',  icon:'🍱', label:'Meal 2 — Locale delivery', sub:'5:30pm · protein-first'},
-    {id:'t_shake',  icon:'🥤', label:'Whey isolate shake', sub:'7pm · water only · closes eating window'},
-    {id:'t_diet',   icon:'🚫', label:'Zero alcohol / cheat meals', sub:'No exceptions'},
-    {id:'t_skin',   icon:'✨', label:'Skincare routine', sub:'Cleanser + SPF · Pads EOD'},
-    {id:'t_steps',  icon:'👟', label:'10,000 steps', sub:'Workout + general movement'},
-    {id:'t_supps',  icon:'💊', label:'All supplements taken', sub:'AM + PM per schedule'},
+const CHECKS={
+  today:[
+    {id:'t_lift',icon:'🏋️',label:'1hr lift complete',sub:'PPL split per cycle',cat:'exercise'},
+    {id:'t_cardio',icon:'🏃',label:'30 min cardio complete',sub:'Any modality',cat:'exercise'},
+    {id:'t_mob',icon:'🧘',label:'Mobility block complete',sub:'Core or Hip/Lower Body — 15 min',cat:'exercise'},
+    {id:'t_read',icon:'📖',label:'Read 10 pages',sub:'Non-fiction / self-development',cat:'other'},
+    {id:'t_water',icon:'💧',label:'1 gallon of water',sub:'Track throughout the day',cat:'nutrition'},
+    {id:'t_meal1',icon:'🥗',label:'Meal 1 — Locale, 12pm',sub:'High-protein selection',cat:'nutrition'},
+    {id:'t_meal2',icon:'🍱',label:'Meal 2 — Locale, 5:30pm',sub:'Protein-first',cat:'nutrition'},
+    {id:'t_shake',icon:'🥤',label:'Whey isolate shake, 7pm',sub:'Water only — closes eating window',cat:'nutrition'},
+    {id:'t_diet',icon:'🚫',label:'Zero alcohol / cheat meals',sub:'No exceptions',cat:'nutrition'},
+    {id:'t_skin',icon:'✨',label:'Skincare routine',sub:'Cleanser + SPF · Pads EOD',cat:'other'},
+    {id:'t_steps',icon:'👟',label:'10,000 steps',sub:'Workout + general movement',cat:'exercise'},
+    {id:'t_supps',icon:'💊',label:'All supplements taken',sub:'AM + PM per schedule',cat:'supplements'},
   ],
-  schedule: [
-    {id:'s_wake',   icon:'⏰', label:'Wake 5am + water + AM supps', sub:'Creatine + Omega-3'},
-    {id:'s_skin1',  icon:'✨', label:'AM skincare done', sub:'Cleanser + SPF'},
-    {id:'s_lift',   icon:'🏋️', label:'60 min lift', sub:'PPL split'},
-    {id:'s_cardio', icon:'🏃', label:'30 min cardio', sub:'Any modality'},
-    {id:'s_mob',    icon:'🧘', label:'15 min mobility', sub:'Core or Hip alternating'},
-    {id:'s_coffee', icon:'☕', label:'Coffee ≤2 cups, none after 12pm', sub:'Black only'},
-    {id:'s_read',   icon:'📖', label:'10 pages read', sub:'Non-fiction'},
-    {id:'s_sleep',  icon:'😴', label:'In bed by 9:30pm', sub:'7–7.5hr sleep'},
+  schedule:[
+    {id:'s_wake',icon:'⏰',label:'Wake 5am + water + AM supps',sub:'Creatine + Omega-3'},
+    {id:'s_skin1',icon:'✨',label:'AM skincare done',sub:'Cleanser + SPF'},
+    {id:'s_lift',icon:'🏋️',label:'60 min lift',sub:'PPL split'},
+    {id:'s_cardio',icon:'🏃',label:'30 min cardio',sub:'Any modality'},
+    {id:'s_mob',icon:'🧘',label:'15 min mobility',sub:'Core or Hip alternating'},
+    {id:'s_coffee',icon:'☕',label:'Coffee ≤2 cups, none after 12pm',sub:'Black only'},
+    {id:'s_read',icon:'📖',label:'10 pages read',sub:'Non-fiction'},
+    {id:'s_sleep',icon:'😴',label:'In bed by 9:30pm',sub:'7–7.5hr sleep'},
   ],
-  nutrition: [
-    {id:'n_fast',   icon:'⏱', label:'Fasting window honored', sub:'No food before 12pm'},
-    {id:'n_meal1',  icon:'🥗', label:'Meal 1 — Locale, 12pm', sub:'High-protein selection'},
-    {id:'n_meal2',  icon:'🍱', label:'Meal 2 — Locale, 5:30pm', sub:'Protein-first'},
-    {id:'n_shake',  icon:'🥤', label:'Whey isolate shake, 7pm', sub:'Water only — window closes'},
-    {id:'n_175',    icon:'💪', label:'175g+ protein hit', sub:'Across meals + shake'},
-    {id:'n_2200',   icon:'🔢', label:'Under 2,200 calories', sub:'Locale meals + shake'},
-    {id:'n_water',  icon:'💧', label:'1 gallon water', sub:'No exceptions'},
-    {id:'n_clean',  icon:'🚫', label:'No alcohol / cheat meals', sub:'Zero exceptions'},
+  nutrition:[
+    {id:'n_fast',icon:'⏱',label:'Fasting window honored',sub:'No food before 12pm'},
+    {id:'n_meal1',icon:'🥗',label:'Meal 1 — Locale, 12pm',sub:'High-protein selection'},
+    {id:'n_meal2',icon:'🍱',label:'Meal 2 — Locale, 5:30pm',sub:'Protein-first'},
+    {id:'n_shake',icon:'🥤',label:'Whey isolate shake, 7pm',sub:'Water only — window closes'},
+    {id:'n_175',icon:'💪',label:'175g+ protein hit',sub:'Across meals + shake'},
+    {id:'n_2200',icon:'🔢',label:'Under 2,200 calories',sub:'Locale meals + shake'},
+    {id:'n_water',icon:'💧',label:'1 gallon water',sub:'No exceptions'},
+    {id:'n_clean',icon:'🚫',label:'No alcohol / cheat meals',sub:'Zero exceptions'},
   ],
-  mobility: [
-    {id:'m_done',   icon:'🧘', label:'Mobility block completed', sub:'Post-workout · 15–20 min'},
-    {id:'m_all',    icon:'✅', label:'All exercises completed', sub:'Full routine, no skipping sets'},
-    {id:'m_breath', icon:'🌬️', label:'Controlled breathing throughout', sub:'Inhale through nose, exhale through mouth'},
+  mobility:[
+    {id:'m_done',icon:'🧘',label:'Mobility block completed',sub:'Post-workout · 15–20 min'},
+    {id:'m_all',icon:'✅',label:'All exercises completed',sub:'Full routine, no skipping sets'},
+    {id:'m_breath',icon:'🌬️',label:'Controlled breathing throughout',sub:'Slow, intentional movement'},
   ],
-  supplements: [
-    {id:'sp_creat', icon:'💊', label:'Creatine (15g) — 5am', sub:'Pre-workout'},
-    {id:'sp_omega', icon:'🐟', label:'Omega-3 — 5am', sub:'Pre-workout'},
-    {id:'sp_d3',    icon:'☀️', label:'D3 + K2 MK7 — 12pm', sub:'With first meal'},
-    {id:'sp_bcomp', icon:'⚡', label:'B-Complex — 12pm', sub:'With first meal'},
-    {id:'sp_mag',   icon:'🌙', label:'Magnesium L-Threonate — 9pm', sub:'Empty stomach'},
-    {id:'sp_zma',   icon:'😴', label:'ZMA — 9pm', sub:'Empty stomach'},
-    {id:'sp_skin',  icon:'✨', label:'PM skincare done', sub:'Pads if EOD night'},
+  supplements:[
+    {id:'sp_creat',icon:'💊',label:'Creatine (15g) — 5am',sub:'Pre-workout'},
+    {id:'sp_omega',icon:'🐟',label:'Omega-3 — 5am',sub:'Pre-workout'},
+    {id:'sp_d3',icon:'☀️',label:'D3 + K2 MK7 — 12pm',sub:'With first meal'},
+    {id:'sp_bcomp',icon:'⚡',label:'B-Complex — 12pm',sub:'With first meal'},
+    {id:'sp_mag',icon:'🌙',label:'Magnesium L-Threonate — 9pm',sub:'Empty stomach'},
+    {id:'sp_zma',icon:'😴',label:'ZMA — 9pm',sub:'Empty stomach'},
+    {id:'sp_skin',icon:'✨',label:'PM skincare done',sub:'Pads if EOD night'},
   ],
 };
 
-// --- STORAGE ---
-function getStartDate() {
-  const s = localStorage.getItem(STORAGE_KEY);
-  if (s) return new Date(s);
-  const now = new Date(); now.setHours(0,0,0,0);
-  localStorage.setItem(STORAGE_KEY, now.toISOString());
+// --- STATE ---
+let viewingDay = null; // null = today mode
+
+function getStartDate(){
+  const s=localStorage.getItem(STORAGE_KEY);
+  if(s) return new Date(s);
+  const now=new Date();now.setHours(0,0,0,0);
+  localStorage.setItem(STORAGE_KEY,now.toISOString());
   return now;
 }
-function getDayNumber(start) {
-  const now = new Date(); now.setHours(0,0,0,0);
-  return Math.max(1, Math.min(Math.floor((now - start)/86400000)+1, 75));
+function getTodayDayNum(){
+  const start=getStartDate();
+  const now=new Date();now.setHours(0,0,0,0);
+  return Math.max(1,Math.min(Math.floor((now-start)/86400000)+1,75));
 }
-function getTodayKey() {
-  const n = new Date();
-  return `${n.getFullYear()}-${n.getMonth()}-${n.getDate()}`;
+function getActiveDayNum(){
+  return viewingDay !== null ? viewingDay : getTodayDayNum();
 }
-function getChecks() {
-  try { return JSON.parse(localStorage.getItem(CHECK_KEY)) || {}; } catch { return {}; }
+function isViewingToday(){
+  return viewingDay === null || viewingDay === getTodayDayNum();
 }
-function saveChecks(obj) { localStorage.setItem(CHECK_KEY, JSON.stringify(obj)); }
-function isChecked(section, id) {
-  const c = getChecks(); const tk = getTodayKey();
-  return !!(c[tk] && c[tk][section] && c[tk][section][id]);
+function getDayKey(dayNum){
+  // key by day number for portability
+  return `day${dayNum}`;
 }
-function toggleCheck(section, id) {
-  const c = getChecks(); const tk = getTodayKey();
-  if (!c[tk]) c[tk] = {};
-  if (!c[tk][section]) c[tk][section] = {};
-  c[tk][section][id] = !c[tk][section][id];
+function getChecks(){
+  try{return JSON.parse(localStorage.getItem(CHECK_KEY))||{};}catch{return {};}
+}
+function saveChecks(obj){localStorage.setItem(CHECK_KEY,JSON.stringify(obj));}
+function isChecked(section,id,dayNum){
+  const dn=dayNum||getActiveDayNum();
+  const c=getChecks();const dk=getDayKey(dn);
+  return !!(c[dk]&&c[dk][section]&&c[dk][section][id]);
+}
+function toggleCheck(section,id){
+  if(!isViewingToday()) return; // read-only for past/future
+  const c=getChecks();const dk=getDayKey(getActiveDayNum());
+  if(!c[dk])c[dk]={};
+  if(!c[dk][section])c[dk][section]={};
+  c[dk][section][id]=!c[dk][section][id];
   saveChecks(c);
-  renderAllChecklists();
-  updateTodayProgress();
+  renderAllChecklists();updateTodayProgress();
 }
-function resetChecklist(section) {
-  const c = getChecks(); const tk = getTodayKey();
-  if (!c[tk]) c[tk] = {};
-  c[tk][section] = {};
-  saveChecks(c);
-  renderAllChecklists();
-  updateTodayProgress();
+function resetChecklist(section){
+  if(!isViewingToday()) return;
+  const c=getChecks();const dk=getDayKey(getActiveDayNum());
+  if(!c[dk])c[dk]={};
+  c[dk][section]={};
+  saveChecks(c);renderAllChecklists();updateTodayProgress();
 }
 
-// --- CHECKLIST RENDER ---
-function renderCheckSection(containerId, section, items) {
-  const el = document.getElementById(containerId);
-  if (!el) return;
-  el.innerHTML = items.map(item => {
-    const done = isChecked(section, item.id);
-    return `<div class="check-row ${done?'done':''}" onclick="toggleCheck('${section}','${item.id}')">
+// --- NAVIGATION ---
+function buildDaySelect(){
+  const sel=document.getElementById('dayJump');
+  const todayNum=getTodayDayNum();
+  sel.innerHTML='';
+  for(let d=1;d<=75;d++){
+    const opt=document.createElement('option');
+    opt.value=d;
+    opt.textContent=`Day ${d}${d===todayNum?' (today)':''}`;
+    sel.appendChild(opt);
+  }
+  sel.value=getActiveDayNum();
+}
+function jumpToDay(d){
+  const n=parseInt(d);
+  if(n===getTodayDayNum()){viewingDay=null;}else{viewingDay=n;}
+  refreshView();
+}
+function navigateDay(delta){
+  const cur=getActiveDayNum();
+  const next=Math.max(1,Math.min(75,cur+delta));
+  if(next===getTodayDayNum()){viewingDay=null;}else{viewingDay=next;}
+  refreshView();
+}
+function goToToday(){viewingDay=null;refreshView();}
+function refreshView(){
+  const dayNum=getActiveDayNum();
+  buildDaySelect();
+  renderHeader(dayNum);
+  renderAllChecklists();
+  updateTodayProgress();
+  updateNavButtons();
+}
+function updateNavButtons(){
+  const cur=getActiveDayNum();
+  document.getElementById('navPrev').disabled=cur<=1;
+  document.getElementById('navNext').disabled=cur>=75;
+  const isToday=isViewingToday();
+  const badge=document.getElementById('viewingBadge');
+  badge.textContent=isToday?'TODAY':`DAY ${cur}`;
+  badge.className='viewing-badge'+(isToday?' is-today':'');
+  const notice=document.getElementById('viewingNotice');
+  const resetBtn=document.getElementById('resetTodayBtn');
+  if(!isToday){
+    notice.style.display='flex';
+    document.getElementById('viewingNoticeText').textContent=`Viewing Day ${cur}`;
+    if(resetBtn) resetBtn.style.display='none';
+  } else {
+    notice.style.display='none';
+    if(resetBtn) resetBtn.style.display='';
+  }
+}
+
+// --- RENDER HEADER ---
+function renderHeader(dayNum){
+  const pct=Math.round((dayNum/75)*100);
+  const daysLeft=75-dayNum;
+  const start=getStartDate();
+  const circ=2*Math.PI*36;
+  document.getElementById('dayNum').textContent=dayNum;
+  document.getElementById('daysLeft').textContent=daysLeft>0?`${daysLeft} DAYS REMAINING`:'🔥 COMPLETE';
+  document.getElementById('startedLabel').textContent=`STARTED ${start.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}).toUpperCase()}`;
+  document.getElementById('ringPct').textContent=pct+'%';
+  document.getElementById('progBar').style.width=pct+'%';
+  document.getElementById('ringFill').setAttribute('stroke-dashoffset',circ*(1-pct/100));
+  document.getElementById('checkDayNum').textContent=dayNum;
+  document.querySelectorAll('.checkDayDisplay').forEach(el=>el.textContent=dayNum);
+  const cycle=((dayNum-1)%7)+1;
+  const train=PPL[cycle];const mob=MOBILITY_MAP[cycle];
+  document.getElementById('statLift').textContent=train.label;
+  document.getElementById('statLift').style.color=train.color;
+  document.getElementById('statFocus').textContent=train.detail.split(' · ').slice(0,2).join(' · ');
+  document.getElementById('statMob').textContent=mob;
+  document.getElementById('statMob').style.color=MOB_COLOR[mob];
+  if(daysLeft<=0&&isViewingToday()) document.getElementById('completeBanner').style.display='block';
+  document.getElementById('dayJump').value=dayNum;
+}
+
+// --- CHECKLISTS ---
+function renderCheckSection(containerId,section,items){
+  const el=document.getElementById(containerId);if(!el)return;
+  const locked=!isViewingToday();
+  el.innerHTML=items.map(item=>{
+    const done=isChecked(section,item.id);
+    const cls='check-row'+(done?' done':'')+(locked?' locked':'');
+    return `<div class="${cls}" onclick="${locked?'':'toggleCheck(\''+section+'\',\''+item.id+'\')'}">
       <div class="check-box"><span class="check-box-tick">✓</span></div>
-      <span style="font-size:18px;flex-shrink:0">${item.icon}</span>
-      <div>
-        <div class="check-text">${item.label}</div>
-        <div class="check-sub">${item.sub}</div>
-      </div>
+      <span style="font-size:17px;flex-shrink:0">${item.icon}</span>
+      <div><div class="check-text">${item.label}</div><div class="check-sub">${item.sub}</div></div>
     </div>`;
   }).join('');
 }
-
-function renderAllChecklists() {
-  renderCheckSection('checklistItems',      'today',       CHECKS.today);
-  renderCheckSection('scheduleChecklist',   'schedule',    CHECKS.schedule);
-  renderCheckSection('nutritionChecklist',  'nutrition',   CHECKS.nutrition);
-  renderCheckSection('mobilityChecklist',   'mobility',    CHECKS.mobility);
-  renderCheckSection('supplementsChecklist','supplements', CHECKS.supplements);
+function renderAllChecklists(){
+  renderCheckSection('checklistItems','today',CHECKS.today);
+  renderCheckSection('scheduleChecklist','schedule',CHECKS.schedule);
+  renderCheckSection('nutritionChecklist','nutrition',CHECKS.nutrition);
+  renderCheckSection('mobilityChecklist','mobility',CHECKS.mobility);
+  renderCheckSection('supplementsChecklist','supplements',CHECKS.supplements);
+}
+function updateTodayProgress(){
+  const dayNum=getActiveDayNum();
+  const total=CHECKS.today.length;
+  const done=CHECKS.today.filter(i=>isChecked('today',i.id,dayNum)).length;
+  const pct=total>0?Math.round((done/total)*100):0;
+  document.getElementById('todayProgFill').style.width=pct+'%';
+  document.getElementById('todayProgCount').textContent=`${done} / ${total}`;
 }
 
-function updateTodayProgress() {
-  const total = CHECKS.today.length;
-  const done = CHECKS.today.filter(i => isChecked('today', i.id)).length;
-  const pct = total > 0 ? Math.round((done/total)*100) : 0;
-  document.getElementById('todayProgFill').style.width = pct + '%';
-  document.getElementById('todayProgCount').textContent = `${done} / ${total}`;
-}
-
-// --- HEADER ---
-function renderHeader(dayNum) {
-  const pct = Math.round((dayNum/75)*100);
-  const daysLeft = 75 - dayNum;
-  const start = getStartDate();
-  const circ = 2*Math.PI*37;
-  document.getElementById('dayNum').textContent = dayNum;
-  document.getElementById('daysLeft').textContent = daysLeft > 0 ? `${daysLeft} DAYS REMAINING` : '🔥 COMPLETE';
-  document.getElementById('startedLabel').textContent = `STARTED ${start.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}).toUpperCase()}`;
-  document.getElementById('ringPct').textContent = pct+'%';
-  document.getElementById('progBar').style.width = pct+'%';
-  document.getElementById('ringFill').setAttribute('stroke-dashoffset', circ*(1-pct/100));
-  document.getElementById('checkDayNum').textContent = dayNum;
-  document.querySelectorAll('.checkDayDisplay').forEach(el => el.textContent = dayNum);
-  const cycle = ((dayNum-1)%7)+1;
-  const train = PPL[cycle]; const mob = MOBILITY_MAP[cycle];
-  document.getElementById('statLift').textContent = train.label;
-  document.getElementById('statLift').style.color = train.color;
-  document.getElementById('statFocus').textContent = train.detail.split(' · ').slice(0,2).join(' · ');
-  document.getElementById('statMob').textContent = mob;
-  document.getElementById('statMob').style.color = MOB_COLOR[mob];
-  if (daysLeft <= 0) document.getElementById('completeBanner').style.display = 'block';
-}
-
-function renderSchedule() {
-  document.getElementById('scheduleContent').innerHTML = SCHEDULE.map(row => {
-    const t = TAG[row.tag];
+// --- STATIC RENDERS ---
+function renderSchedule(){
+  document.getElementById('scheduleContent').innerHTML=SCHEDULE.map(row=>{
+    const t=TAG[row.tag];
     return `<div class="sched-row" style="background:${t.bg};border-color:${t.border}">
       <div class="sched-time">${row.time}</div>
       <div class="sched-block-wrap"><div class="dot" style="background:${t.dot}"></div><div class="sched-block">${row.block}</div></div>
@@ -550,9 +633,8 @@ function renderSchedule() {
     </div>`;
   }).join('');
 }
-
-function renderNutrition() {
-  document.getElementById('mealCards').innerHTML = MEALS.map(m => `
+function renderNutrition(){
+  document.getElementById('mealCards').innerHTML=MEALS.map(m=>`
     <div class="meal-card">
       <div class="meal-header">
         <div class="meal-title">${m.label}</div>
@@ -561,54 +643,162 @@ function renderNutrition() {
       ${m.items.map(i=>`<div class="meal-item"><span class="meal-dash">—</span>${i}</div>`).join('')}
     </div>`).join('');
 }
-
-function renderMobility() {
-  document.getElementById('coreRows').innerHTML = CORE.map(e=>
+function renderMobility(){
+  document.getElementById('coreRows').innerHTML=CORE.map(e=>
     `<div class="mob-row"><div class="mob-name">${e.name}</div><div class="mob-sets">${e.sets}</div></div>`).join('');
-  document.getElementById('hipRows').innerHTML = HIP.map(e=>
+  document.getElementById('hipRows').innerHTML=HIP.map(e=>
     `<div class="mob-row"><div class="mob-name">${e.name}</div><div class="mob-sets">${e.sets}</div></div>`).join('');
 }
+function renderSupplements(){
+  document.getElementById('suppRows').innerHTML=SUPPS.map(s=>`
+    <div class="supp-row"><div class="supp-time">${s.time}</div><div class="supp-name">${s.item}</div><div class="supp-note">${s.note}</div></div>`).join('');
+}
 
-function renderSupplements() {
-  document.getElementById('suppRows').innerHTML = SUPPS.map(s=>`
-    <div class="supp-row">
-      <div class="supp-time">${s.time}</div>
-      <div class="supp-name">${s.item}</div>
-      <div class="supp-note">${s.note}</div>
-    </div>`).join('');
+// --- METRICS ---
+function getCatItems(cat){return CHECKS.today.filter(i=>i.cat===cat);}
+function getDayCompletion(dayNum,cat){
+  const items=cat?getCatItems(cat):CHECKS.today;
+  if(!items.length) return 0;
+  const done=items.filter(i=>isChecked('today',i.id,dayNum)).length;
+  return done/items.length;
+}
+function computeMetrics(){
+  const todayNum=getTodayDayNum();
+  const daysLogged=[];
+  for(let d=1;d<=todayNum;d++) daysLogged.push(d);
+  const cats=['exercise','nutrition','supplements','other'];
+  const catColors={exercise:'#1a7a4a',nutrition:'#1a6fa8',supplements:'#7c4daa',other:'#b07800'};
+  const catLabels={exercise:'EXERCISE',nutrition:'NUTRITION',supplements:'SUPPLEMENTS',other:'OTHER'};
+
+  // overall stats
+  let totalPossible=0,totalDone=0;
+  let currentStreak=0,longestStreak=0,tempStreak=0;
+  let perfectDays=0;
+  for(let d=1;d<=todayNum;d++){
+    const comp=getDayCompletion(d,null);
+    totalPossible+=CHECKS.today.length;
+    totalDone+=Math.round(comp*CHECKS.today.length);
+    if(comp>=1){perfectDays++;tempStreak++;longestStreak=Math.max(longestStreak,tempStreak);}
+    else{tempStreak=0;}
+  }
+  // current streak (from today backwards)
+  for(let d=todayNum;d>=1;d--){
+    if(getDayCompletion(d,null)>=1){currentStreak++;}else break;
+  }
+
+  // per-cat rates
+  const catData=cats.map(cat=>{
+    const items=getCatItems(cat);
+    if(!items.length) return null;
+    let done=0,possible=0;
+    for(let d=1;d<=todayNum;d++){
+      possible+=items.length;
+      done+=items.filter(i=>isChecked('today',i.id,d)).length;
+    }
+    return{cat,label:catLabels[cat],color:catColors[cat],pct:possible>0?Math.round((done/possible)*100):0,done,possible,items};
+  }).filter(Boolean);
+
+  return{todayNum,daysLogged,totalPossible,totalDone,currentStreak,longestStreak,perfectDays,catData};
+}
+
+function renderMetrics(){
+  const m=computeMetrics();
+  const overallPct=m.totalPossible>0?Math.round((m.totalDone/m.totalPossible)*100):0;
+  const todayComp=Math.round(getDayCompletion(m.todayNum,null)*100);
+
+  let html=`
+  <div class="metrics-grid">
+    <div class="met-card"><div class="met-label">OVERALL COMPLETION</div><div class="met-val" style="color:var(--orange)">${overallPct}%</div><div class="met-sub">${m.totalDone} of ${m.totalPossible} tasks</div></div>
+    <div class="met-card"><div class="met-label">DAYS LOGGED</div><div class="met-val" style="color:var(--blue)">${m.todayNum}</div><div class="met-sub">of 75 days</div></div>
+    <div class="met-card"><div class="met-label">PERFECT DAYS</div><div class="met-val" style="color:var(--green)">${m.perfectDays}</div><div class="met-sub">${m.todayNum>0?Math.round((m.perfectDays/m.todayNum)*100):0}% of days logged</div></div>
+    <div class="met-card"><div class="met-label">TODAY</div><div class="met-val" style="color:${todayComp>=100?'var(--green)':'var(--amber)'}">${todayComp}%</div><div class="met-sub">Day ${m.todayNum} complete</div></div>
+  </div>
+  <div class="streak-row">
+    <div class="streak-card"><div class="streak-val">${m.currentStreak}</div><div class="streak-label">CURRENT STREAK<br>PERFECT DAYS</div></div>
+    <div class="streak-card"><div class="streak-val" style="color:var(--green)">${m.longestStreak}</div><div class="streak-label">LONGEST STREAK<br>PERFECT DAYS</div></div>
+    <div class="streak-card"><div class="streak-val" style="color:var(--purple)">${75-m.todayNum}</div><div class="streak-label">DAYS<br>REMAINING</div></div>
+  </div>`;
+
+  // Category breakdown
+  m.catData.forEach(cat=>{
+    const barWidth=cat.pct+'%';
+    // per-item breakdown
+    const itemRows=cat.items.map(item=>{
+      let itemDone=0;
+      for(let d=1;d<=m.todayNum;d++){if(isChecked('today',item.id,d)) itemDone++;}
+      const itemPct=m.todayNum>0?Math.round((itemDone/m.todayNum)*100):0;
+      const barColor=itemPct>=80?'var(--green)':itemPct>=50?'var(--amber)':'var(--red)';
+      return `<div class="item-row">
+        <span class="item-name">${item.icon} ${item.label}</span>
+        <div class="item-bar-wrap"><div class="item-bar" style="width:${itemPct}%;background:${barColor}"></div></div>
+        <span class="item-pct-text" style="color:${barColor}">${itemPct}%</span>
+      </div>`;
+    }).join('');
+
+    // 75-day heatmap dots
+    const dots=Array.from({length:75},(_,i)=>{
+      const d=i+1;
+      if(d>m.todayNum) return `<div class="day-dot future" title="Day ${d}"></div>`;
+      const comp=getDayCompletion(d,cat.cat);
+      const cls=comp>=1?'full':comp>0?'partial':'empty';
+      const isToday=d===m.todayNum;
+      return `<div class="day-dot ${cls}${isToday?' today-marker':''}" title="Day ${d}: ${Math.round(comp*100)}%" onclick="jumpToDay(${d})"></div>`;
+    }).join('');
+
+    html+=`<div class="cat-section">
+      <div class="cat-header">
+        <div class="cat-title">${cat.label}</div>
+        <div class="cat-pct" style="color:${cat.color}">${cat.pct}%</div>
+      </div>
+      <div class="cat-bar-wrap"><div class="cat-bar" style="width:${barWidth};background:${cat.color}"></div></div>
+      <div style="font-size:11px;color:var(--muted);font-family:'Barlow',sans-serif;margin-bottom:10px">${cat.done} of ${cat.possible} tasks completed across ${m.todayNum} days</div>
+      <div class="item-breakdown">${itemRows}</div>
+      <div style="margin-top:14px;font-size:10px;color:var(--muted2);letter-spacing:1.5px;margin-bottom:6px">75-DAY HEATMAP — click a dot to view that day</div>
+      <div class="cat-items">${dots}</div>
+      <div class="heatmap-legend">
+        <div class="legend-dot" style="background:var(--green)"></div>100%
+        <div class="legend-dot" style="background:var(--amber)"></div>Partial
+        <div class="legend-dot" style="background:var(--bg3);border:1px solid var(--border)"></div>0%
+        <div class="legend-dot" style="background:var(--border)"></div>Future
+      </div>
+    </div>`;
+  });
+
+  document.getElementById('metricsContent').innerHTML=html;
 }
 
 // --- TABS ---
-function switchTab(name, btn) {
+function switchTab(name,btn){
   document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  const pane = document.getElementById('tab-'+name);
+  const pane=document.getElementById('tab-'+name);
   pane.classList.add('active');
-  pane.classList.remove('fade-in'); void pane.offsetWidth; pane.classList.add('fade-in');
+  pane.classList.remove('fade-in');void pane.offsetWidth;pane.classList.add('fade-in');
   btn.classList.add('active');
+  if(name==='metrics') renderMetrics();
 }
 
 // --- DATE EDITOR ---
-function showDateEdit() {
-  document.getElementById('dateEditArea').style.display = 'inline-flex';
-  document.getElementById('setDateBtn').style.display = 'none';
-  const s = getStartDate();
-  document.getElementById('dateInput').value = `${s.getFullYear()}-${String(s.getMonth()+1).padStart(2,'0')}-${String(s.getDate()).padStart(2,'0')}`;
+function showDateEdit(){
+  document.getElementById('dateEditArea').style.display='inline-flex';
+  document.getElementById('setDateBtn').style.display='none';
+  const s=getStartDate();
+  document.getElementById('dateInput').value=`${s.getFullYear()}-${String(s.getMonth()+1).padStart(2,'0')}-${String(s.getDate()).padStart(2,'0')}`;
 }
-function hideDateEdit() {
-  document.getElementById('dateEditArea').style.display = 'none';
-  document.getElementById('setDateBtn').style.display = '';
+function hideDateEdit(){
+  document.getElementById('dateEditArea').style.display='none';
+  document.getElementById('setDateBtn').style.display='';
 }
-function saveStartDate() {
-  const val = document.getElementById('dateInput').value;
-  if (!val) return;
-  localStorage.setItem(STORAGE_KEY, new Date(val+'T00:00:00').toISOString());
-  hideDateEdit(); init();
+function saveStartDate(){
+  const val=document.getElementById('dateInput').value;
+  if(!val)return;
+  localStorage.setItem(STORAGE_KEY,new Date(val+'T00:00:00').toISOString());
+  hideDateEdit();viewingDay=null;init();
 }
 
-function init() {
-  const start = getStartDate();
-  const dayNum = getDayNumber(start);
+function init(){
+  buildDaySelect();
+  const dayNum=getActiveDayNum();
   renderHeader(dayNum);
   renderSchedule();
   renderNutrition();
@@ -616,8 +806,8 @@ function init() {
   renderSupplements();
   renderAllChecklists();
   updateTodayProgress();
+  updateNavButtons();
 }
-
 init();
 </script>
 </body>
